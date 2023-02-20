@@ -21,4 +21,31 @@ public class Rubric {
         this.finalExam = finalExamValue;
 
     }
+    // getters
+
+    public int getQuizValue() {
+        return quizzes;
+    }
+
+    public int getAssignmentValue() {
+        return assignments;
+    }
+
+    public int getMidtermValue() {
+        return midterm;
+    }
+
+    public int getProjectValue() {
+        return project;
+    }
+
+    public int getParticipationValue() {
+        return participation;
+    }
+
+    public int getFinalExamValue() {
+        return finalExam;
+    }
+
+
 }
