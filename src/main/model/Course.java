@@ -1,6 +1,5 @@
 package model;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 
 // Represents a course in school with the course name and the rubric of the specific course and the grade so far
@@ -19,8 +18,21 @@ public class Course {
     }
 
     // getters:
+
+    public String getName() {
+        return name;
+    }
+
+    public Rubric getRubric() {
+        return rubric;
+    }
+
     public ArrayList<WorkCompleted> getCompletedWork() {
         return completedWork;
+    }
+
+    public double getGrade() {
+        return grade;
     }
 
     // MODIFIES: this

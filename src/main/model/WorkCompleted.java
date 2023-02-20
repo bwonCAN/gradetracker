@@ -1,7 +1,5 @@
 package model;
 
-import java.util.ArrayList;
-
 // represents all the coursework of a student, eg: quizzes, projects, midterms, finals, participation, etc
 public class WorkCompleted {
     private String name;
