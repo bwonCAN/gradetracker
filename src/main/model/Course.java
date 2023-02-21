@@ -17,7 +17,7 @@ public class Course {
         this.grade = 0;
     }
 
-    // getters:
+    // getters + setters:
 
     public String getName() {
         return name;
@@ -34,6 +34,12 @@ public class Course {
     public double getGrade() {
         return grade;
     }
+
+    public void setGrade(double grade) {
+        this.grade = grade;
+    }
+
+    //
 
     // MODIFIES: this
     // EFFECTS: adds new completed assignment to the course
@@ -150,12 +156,14 @@ public class Course {
     // REQUIRES: every submethod needs to have a value, otherwise throws NaN error
     // EFFECTS: calculates overall grade of course
     public double calculateGradeFinal(ArrayList<WorkCompleted> grades) {
-        return ((calculateFinalExamGrade(grades))
+        this.grade = ((calculateFinalExamGrade(grades))
                 + (calculateParticipationGrade(grades))
                 + (calculateProjectGrade(grades))
                 + (calculateMidtermGrade(grades))
                 + (calculateAssignmentGrade(grades))
                 + (calculateQuizGrade(grades)));
+
+        return this.grade;
     }
 
 }

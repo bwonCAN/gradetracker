@@ -44,5 +44,5 @@ GPA.
 ## *User Stories*
 - As a user, I want to be able to add an arbitrary number of classes 
 - As a user, I want to be able to select a university and program of interest
-- As a user, I want to be able to add an arbitrary number of assignments and the grades associated with it
-- As a user, I want to be able to view my current grade in the class
+- As a user, I want to be able to add and remove an arbitrary number of assignments and the grades associated with it
+- As a user, I want to be able to view my current grade in the course

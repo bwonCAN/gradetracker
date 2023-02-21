@@ -60,4 +60,17 @@ public class CourseListTest {
 
     }
 
+    @Test
+    public void testCalculateCourseListGrade() {
+        testCourseList.addCourse(testCourse1);
+        testCourseList.addCourse(testCourse2);
+        testCourse1.setGrade(100);
+        testCourse2.setGrade(50);
+        assertEquals(75, testCourseList.calculateCourseListGrade(testCourseList));
+        Course testCourse3 = new Course("ENGL 110", testRubric);
+        testCourseList.addCourse(testCourse3);
+        testCourse3.setGrade(60);
+        assertEquals(70, testCourseList.calculateCourseListGrade(testCourseList));
+    }
+
 }

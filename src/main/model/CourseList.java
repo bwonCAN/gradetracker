@@ -44,5 +44,13 @@ public class CourseList {
         this.courses.clear();
     }
 
+    // EFFECTS: calculate grade of all courses in course list
+    public double calculateCourseListGrade(CourseList courses) {
+        double grade = 0;
+        for (Course c : courses.getCourses()) {
+            grade += c.getGrade();
+        }
+        return (grade / courses.getCourses().size());
+    }
 
 }

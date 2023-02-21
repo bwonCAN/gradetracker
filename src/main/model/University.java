@@ -27,4 +27,8 @@ public class University {
         return admissionAverage;
     }
     //
+
+    University ubcScience = new University("UBC", "Science", 94);
+
 }
+
