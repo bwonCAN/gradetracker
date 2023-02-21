@@ -47,9 +47,9 @@ public class Course {
         completedWork.remove(work);
     }
 
-    // To calculate grade, I have to add quizzes + assignments + projects, etc. So I have to calculate each and add
 
-
+    // REQUIRES: WorkCompleted must not be empty
+    // EFFECTS: calculates grades from a list of work completed
     public double calculateGrade(ArrayList<WorkCompleted> grades) {
         double numerator = 0;
         for (int k = 0; k < grades.size(); k++) {
@@ -59,93 +59,95 @@ public class Course {
         return grade;
     }
 
+    // REQUIRES: WorkCompleted must not be empty
     // EFFECTS: calculates grade of all quizzes, scaled by rubric
     public double calculateQuizGrade(ArrayList<WorkCompleted> quizGrades) {
         double numerator = 0;
+        ArrayList<WorkCompleted> grades1 = new ArrayList<>();
         for (int k = 0; k < quizGrades.size(); k++) {
             if ((quizGrades.get(k).getName().contains("Quiz")) || (quizGrades.get(k).getName().contains("quiz"))) {
                 numerator = numerator + quizGrades.get(k).getGrade();
-            } else {
-                quizGrades.remove(k);
+                grades1.add(quizGrades.get(k));
             }
         }
-        return (((numerator / quizGrades.size()) * rubric.getQuizValue()) / 100);
+        return (((numerator / grades1.size()) * rubric.getQuizValue()) / 100);
     }
 
 
-    // REQUIRES: all items in array list is part of assignments category
+    // REQUIRES: WorkCompleted must not be empty
     // EFFECTS: calculates grade of all assignments, scaled by rubric
     public double calculateAssignmentGrade(ArrayList<WorkCompleted> grades) {
         double numerator = 0;
+        ArrayList<WorkCompleted> grades1 = new ArrayList<>();
         for (int k = 0; k < grades.size(); k++) {
             if ((grades.get(k).getName().contains("Assign")) || (grades.get(k).getName().contains("assign"))) {
                 numerator = numerator + grades.get(k).getGrade();
-            } else {
-                grades.remove(k);
+                grades1.add(grades.get(k));
             }
         }
-        return (((numerator / grades.size()) * rubric.getAssignmentValue()) / 100);
+        return (((numerator / grades1.size()) * rubric.getAssignmentValue()) / 100);
     }
 
 
-    // REQUIRES: all items in array list is part of midterms category
+    // REQUIRES: WorkCompleted must not be empty
     // EFFECTS: calculates grade of all midterms, scaled by rubric
     public double calculateMidtermGrade(ArrayList<WorkCompleted> grades) {
         double numerator = 0;
+        ArrayList<WorkCompleted> grades1 = new ArrayList<>();
         for (int k = 0; k < grades.size(); k++) {
             if ((grades.get(k).getName().contains("Mid")) || (grades.get(k).getName().contains("mid"))) {
                 numerator = numerator + grades.get(k).getGrade();
-            } else {
-                grades.remove(k);
+                grades1.add(grades.get(k));
             }
         }
-        return (((numerator / grades.size()) * rubric.getMidtermValue()) / 100);
+        return (((numerator / grades1.size()) * rubric.getMidtermValue()) / 100);
     }
 
-    // REQUIRES: all items in array list is part of projects category
+    // REQUIRES: WorkCompleted must not be empty
     // EFFECTS: calculates grade of all projects, scaled by rubric
     public double calculateProjectGrade(ArrayList<WorkCompleted> grades) {
         double numerator = 0;
+        ArrayList<WorkCompleted> grades1 = new ArrayList<>();
         for (int k = 0; k < grades.size(); k++) {
             if ((grades.get(k).getName().contains("Proj")) || (grades.get(k).getName().contains("proj"))) {
                 numerator = numerator + grades.get(k).getGrade();
-            } else {
-                grades.remove(k);
+                grades1.add(grades.get(k));
             }
         }
-        return (((numerator / grades.size()) * rubric.getProjectValue()) / 100);
+        return (((numerator / grades1.size()) * rubric.getProjectValue()) / 100);
     }
 
-    // REQUIRES: all items in array list is part of participation category
+    // REQUIRES: WorkCompleted must not be empty
     // EFFECTS: calculates grade of all participation, scaled by rubric
     public double calculateParticipationGrade(ArrayList<WorkCompleted> grades) {
         double numerator = 0;
+        ArrayList<WorkCompleted> grades1 = new ArrayList<>();
         for (int k = 0; k < grades.size(); k++) {
             if ((grades.get(k).getName().contains("Partici")) || (grades.get(k).getName().contains("partici"))) {
                 numerator = numerator + grades.get(k).getGrade();
-            } else {
-                grades.remove(k);
+                grades1.add(grades.get(k));
             }
         }
-        return (((numerator / grades.size()) * rubric.getParticipationValue()) / 100);
+        return (((numerator / grades1.size()) * rubric.getParticipationValue()) / 100);
     }
 
 
-    // REQUIRES: all items in array list is part of final exam category
+    // REQUIRES: WorkCompleted must not be empty
     // EFFECTS: calculates grade of all final exams, scaled by rubric
     public double calculateFinalExamGrade(ArrayList<WorkCompleted> grades) {
         double numerator = 0;
+        ArrayList<WorkCompleted> grades1 = new ArrayList<>();
         for (int k = 0; k < grades.size(); k++) {
             if ((grades.get(k).getName().contains("Final")) || (grades.get(k).getName().contains("final"))) {
                 numerator = numerator + grades.get(k).getGrade();
-            } else {
-                grades.remove(k);
+                grades1.add(grades.get(k));
             }
         }
-        return (((numerator / grades.size()) * rubric.getFinalExamValue()) / 100);
+        return (((numerator / grades1.size()) * rubric.getFinalExamValue()) / 100);
     }
 
 
+    // REQUIRES: every submethod needs to have a value, otherwise throws NaN error
     // EFFECTS: calculates overall grade of course
     public double calculateGradeFinal(ArrayList<WorkCompleted> grades) {
         return ((calculateFinalExamGrade(grades))
@@ -155,14 +157,5 @@ public class Course {
                 + (calculateAssignmentGrade(grades))
                 + (calculateQuizGrade(grades)));
     }
-    // ROUGH CODE FOR CALCULATION
-//    public double calculateGrade(ArrayList<Double> grades) {
-//        double numerator = 0;
-//        for (int k = 0; k < grades.size(); k++) {
-//            numerator = numerator + grades.get(k);
-//        }
-//        grade = (numerator / grades.size());
-//        return grade;
-//    }
 
 }

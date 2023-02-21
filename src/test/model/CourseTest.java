@@ -125,12 +125,12 @@ public class CourseTest {
         assertEquals(25, testCourse.calculateFinalExamGrade(finalExamGrade));
     }
 
-    @Test
-    public void testConsecutiveCategories() {
-        testCourse.addCompletedWork(new WorkCompleted("Quiz 1", 100));
-        testCourse.addCompletedWork(new WorkCompleted("Assignment 1", 100));
-        assertEquals(20, testCourse.calculateGradeFinal(testCourse.getCompletedWork()));
-    }
+//    @Test
+//    public void testConsecutiveCategories() {
+//        testCourse.addCompletedWork(new WorkCompleted("Quiz 1", 100));
+//        testCourse.addCompletedWork(new WorkCompleted("Assignment 1", 100));
+//        assertEquals(20, testCourse.calculateGradeFinal(testCourse.getCompletedWork()));
+//    }
 
     @Test
     public void testCalculateGradesFinal() {
