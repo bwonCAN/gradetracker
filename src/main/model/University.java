@@ -12,4 +12,19 @@ public class University {
         this.program = program;
         this.admissionAverage = admissionAverage;
     }
+
+    // getters
+
+    public String getName() {
+        return name;
+    }
+
+    public String getProgram() {
+        return program;
+    }
+
+    public int getAdmissionAverage() {
+        return admissionAverage;
+    }
+    //
 }

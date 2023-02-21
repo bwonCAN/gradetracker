@@ -50,71 +50,111 @@ public class Course {
     // To calculate grade, I have to add quizzes + assignments + projects, etc. So I have to calculate each and add
 
 
-    public double calculateGrade(ArrayList<WorkCompleted> quizGrades) {
+    public double calculateGrade(ArrayList<WorkCompleted> grades) {
         double numerator = 0;
-        for (int k = 0; k < quizGrades.size(); k++) {
-            numerator = numerator + quizGrades.get(k).getGrade();
+        for (int k = 0; k < grades.size(); k++) {
+            numerator = numerator + grades.get(k).getGrade();
         }
-        grade = (numerator / quizGrades.size());
+        grade = (numerator / grades.size());
         return grade;
     }
 
-    // REQUIRES: all items in array list is part of quizzes category
     // EFFECTS: calculates grade of all quizzes, scaled by rubric
     public double calculateQuizGrade(ArrayList<WorkCompleted> quizGrades) {
-        grade = calculateGrade(quizGrades);
-        return ((grade * rubric.getQuizValue()) / 100);
+        double numerator = 0;
+        for (int k = 0; k < quizGrades.size(); k++) {
+            if ((quizGrades.get(k).getName().contains("Quiz")) || (quizGrades.get(k).getName().contains("quiz"))) {
+                numerator = numerator + quizGrades.get(k).getGrade();
+            } else {
+                quizGrades.remove(k);
+            }
+        }
+        return (((numerator / quizGrades.size()) * rubric.getQuizValue()) / 100);
     }
+
 
     // REQUIRES: all items in array list is part of assignments category
     // EFFECTS: calculates grade of all assignments, scaled by rubric
-    public double calculateAssignmentGrade(ArrayList<WorkCompleted> assignmentGrades) {
-        grade = calculateGrade(assignmentGrades);
-        return ((grade * rubric.getAssignmentValue()) / 100);
+    public double calculateAssignmentGrade(ArrayList<WorkCompleted> grades) {
+        double numerator = 0;
+        for (int k = 0; k < grades.size(); k++) {
+            if ((grades.get(k).getName().contains("Assign")) || (grades.get(k).getName().contains("assign"))) {
+                numerator = numerator + grades.get(k).getGrade();
+            } else {
+                grades.remove(k);
+            }
+        }
+        return (((numerator / grades.size()) * rubric.getAssignmentValue()) / 100);
     }
+
 
     // REQUIRES: all items in array list is part of midterms category
     // EFFECTS: calculates grade of all midterms, scaled by rubric
-    public double calculateMidtermGrade(ArrayList<WorkCompleted> midtermGrades) {
-        grade = calculateGrade(midtermGrades);
-        return ((grade * rubric.getMidtermValue()) / 100);
+    public double calculateMidtermGrade(ArrayList<WorkCompleted> grades) {
+        double numerator = 0;
+        for (int k = 0; k < grades.size(); k++) {
+            if ((grades.get(k).getName().contains("Mid")) || (grades.get(k).getName().contains("mid"))) {
+                numerator = numerator + grades.get(k).getGrade();
+            } else {
+                grades.remove(k);
+            }
+        }
+        return (((numerator / grades.size()) * rubric.getMidtermValue()) / 100);
     }
 
     // REQUIRES: all items in array list is part of projects category
     // EFFECTS: calculates grade of all projects, scaled by rubric
-    public double calculateProjectGrade(ArrayList<WorkCompleted> projectGrades) {
-        grade = calculateGrade(projectGrades);
-        return ((grade * rubric.getProjectValue()) / 100);
+    public double calculateProjectGrade(ArrayList<WorkCompleted> grades) {
+        double numerator = 0;
+        for (int k = 0; k < grades.size(); k++) {
+            if ((grades.get(k).getName().contains("Proj")) || (grades.get(k).getName().contains("proj"))) {
+                numerator = numerator + grades.get(k).getGrade();
+            } else {
+                grades.remove(k);
+            }
+        }
+        return (((numerator / grades.size()) * rubric.getProjectValue()) / 100);
     }
 
     // REQUIRES: all items in array list is part of participation category
     // EFFECTS: calculates grade of all participation, scaled by rubric
-    public double calculateParticipationGrade(ArrayList<WorkCompleted> participationGrade) {
-        grade = calculateGrade(participationGrade);
-        return ((grade * rubric.getParticipationValue()) / 100);
+    public double calculateParticipationGrade(ArrayList<WorkCompleted> grades) {
+        double numerator = 0;
+        for (int k = 0; k < grades.size(); k++) {
+            if ((grades.get(k).getName().contains("Partici")) || (grades.get(k).getName().contains("partici"))) {
+                numerator = numerator + grades.get(k).getGrade();
+            } else {
+                grades.remove(k);
+            }
+        }
+        return (((numerator / grades.size()) * rubric.getParticipationValue()) / 100);
     }
 
 
     // REQUIRES: all items in array list is part of final exam category
     // EFFECTS: calculates grade of all final exams, scaled by rubric
-    public double calculateFinalExamGrade(ArrayList<WorkCompleted> finalExamGrade) {
-        grade = calculateGrade(finalExamGrade);
-        return ((grade * rubric.getFinalExamValue()) / 100);
+    public double calculateFinalExamGrade(ArrayList<WorkCompleted> grades) {
+        double numerator = 0;
+        for (int k = 0; k < grades.size(); k++) {
+            if ((grades.get(k).getName().contains("Final")) || (grades.get(k).getName().contains("final"))) {
+                numerator = numerator + grades.get(k).getGrade();
+            } else {
+                grades.remove(k);
+            }
+        }
+        return (((numerator / grades.size()) * rubric.getFinalExamValue()) / 100);
     }
 
 
     // EFFECTS: calculates overall grade of course
-    public double calculateFinalGrades(ArrayList<WorkCompleted> quizGrades, ArrayList<WorkCompleted> assignmentGrades,
-                                       ArrayList<WorkCompleted> midtermGrades, ArrayList<WorkCompleted> projectGrades,
-                                       ArrayList<WorkCompleted> participationGrade, ArrayList<WorkCompleted>
-                                               finalExamGrade) {
-        return (((calculateQuizGrade(quizGrades)) + (calculateAssignmentGrade(assignmentGrades))
-                + (calculateMidtermGrade(midtermGrades))
-                + (calculateProjectGrade(projectGrades))
-                + (calculateParticipationGrade(participationGrade))
-                + (calculateFinalExamGrade(finalExamGrade))) / 6);
+    public double calculateGradeFinal(ArrayList<WorkCompleted> grades) {
+        return ((calculateFinalExamGrade(grades))
+                + (calculateParticipationGrade(grades))
+                + (calculateProjectGrade(grades))
+                + (calculateMidtermGrade(grades))
+                + (calculateAssignmentGrade(grades))
+                + (calculateQuizGrade(grades)));
     }
-
     // ROUGH CODE FOR CALCULATION
 //    public double calculateGrade(ArrayList<Double> grades) {
 //        double numerator = 0;

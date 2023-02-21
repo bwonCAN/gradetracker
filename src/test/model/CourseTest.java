@@ -1,6 +1,5 @@
 package model;
 
-import model.Course;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -74,6 +73,11 @@ public class CourseTest {
         ArrayList<WorkCompleted> quizGrades = testCourse.getCompletedWork();
         assertEquals(10, testRubric.getQuizValue());
         assertEquals(5, testCourse.calculateQuizGrade(quizGrades));
+        testCourse.addCompletedWork(new WorkCompleted("Assignment 1", 20));
+        assertEquals(5, testCourse.calculateQuizGrade(quizGrades));
+        testCourse.addCompletedWork(new WorkCompleted("Midterm 2", 20));
+        assertEquals(5, testCourse.calculateQuizGrade(quizGrades));
+
 
     }
 
@@ -122,12 +126,22 @@ public class CourseTest {
     }
 
     @Test
-    public void testCalculateFinalGrades() {
+    public void testConsecutiveCategories() {
         testCourse.addCompletedWork(new WorkCompleted("Quiz 1", 100));
-        testCourse.addCompletedWork(new WorkCompleted("Quiz 2", 50));
-        testCourse.addCompletedWork(new WorkCompleted("Quiz 3", 30));
-        testCourse.addCompletedWork(new WorkCompleted("Quiz 4", 20));
-        ArrayList<WorkCompleted> quizGrades = testCourse.getCompletedWork();
+        testCourse.addCompletedWork(new WorkCompleted("Assignment 1", 100));
+        assertEquals(20, testCourse.calculateGradeFinal(testCourse.getCompletedWork()));
+    }
+
+    @Test
+    public void testCalculateGradesFinal() {
+        testCourse.addCompletedWork(new WorkCompleted("Quiz 1", 100));
+        testCourse.addCompletedWork(new WorkCompleted("Assignment 1", 50));
+        testCourse.addCompletedWork(new WorkCompleted("Midterm 1", 50));
+        testCourse.addCompletedWork(new WorkCompleted("Project 1", 50));
+        testCourse.addCompletedWork(new WorkCompleted("Participation", 100));
+        testCourse.addCompletedWork(new WorkCompleted("Final Exam", 80));
+        ArrayList<WorkCompleted> grade = testCourse.getCompletedWork();
+        assertEquals(65, testCourse.calculateGradeFinal(grade));
 
 
     }

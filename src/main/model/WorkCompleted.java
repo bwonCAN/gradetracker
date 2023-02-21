@@ -11,6 +11,8 @@ public class WorkCompleted {
         this.grade = grade;
     }
 
+    // GETTERS:
+
     public double getGrade() {
         return grade;
     }
@@ -18,4 +20,5 @@ public class WorkCompleted {
     public String getName() {
         return name;
     }
+    //
 }

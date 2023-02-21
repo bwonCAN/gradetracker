@@ -13,6 +13,19 @@ public class CourseList {
         this.courses = new ArrayList<>();
     }
 
+    // GETTERS:
+
+    public String getName() {
+        return name;
+    }
+
+    // EFFECTS: shows current courses
+    public ArrayList<Course> getCourses() {
+        return this.courses;
+    }
+
+    //
+
     // MODIFIES: this
     // EFFECTS: adds new course to the course list
     public void addCourse(Course course) {
@@ -25,14 +38,11 @@ public class CourseList {
         this.courses.remove(course);
     }
 
-    // EFFECTS: shows current courses
-    public ArrayList<Course> showCourses() {
-        return this.courses;
-    }
-
     // MODIFIES: this
     // EFFECTS: erases all courses in current list
     public void eraseCourses() {
         this.courses.clear();
     }
+
+
 }
