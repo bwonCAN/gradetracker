@@ -48,7 +48,7 @@ public class Course {
     }
 
     // MODIFIES: this
-    // EFFECTS: removes completed assignment to the course
+    // EFFECTS: removes completed assignment from the course
     public void removeCompletedWork(WorkCompleted work) {
         completedWork.remove(work);
     }
