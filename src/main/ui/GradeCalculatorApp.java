@@ -1,9 +1,6 @@
 package ui;
 
-import model.Course;
-import model.CourseList;
-import model.Program;
-import model.Rubric;
+import model.*;
 
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -16,11 +13,14 @@ public class GradeCalculatorApp {
     private Rubric rubric;
     private Course course;
     private Scanner input;
+    private WorkCompleted work;
 
     // EFFECTS: runs the grade calculator app
     public GradeCalculatorApp() {
         runCourseLists();
     }
+
+    // ADD WORK LISTS:
 
     // MODIFIES: this
     // EFFECTS: processes user input
@@ -58,7 +58,8 @@ public class GradeCalculatorApp {
         } else if (command.equals("v")) {
             viewCourseList();
         } else if (command.equals("b")) {
-            runCourseLists(); //!!! how to go back to home page?
+            displayMenu();
+            processCommand(input.next());
         } else {
             System.out.println("Selection not valid...");
         }
@@ -70,79 +71,8 @@ public class GradeCalculatorApp {
         System.out.println("\ta -> add course list");
         System.out.println("\tr -> remove course list");
         System.out.println("\tv -> view course list");
-        System.out.println("\tb -> go back to home screen -> current resets everything -> needs work");
+        System.out.println("\tb -> go back to home screen");
         System.out.println("\tq -> quit");
-    }
-
-    // MODIFIES: this
-    // EFFECTS: processes user input
-    private void runCourses(CourseList selectedCourseList) {
-        boolean keepGoing = true;
-        String command = null;
-        Course course = null;
-
-        init();
-
-        while (keepGoing) {
-            displayMenu2(selectedCourseList);
-            command = input.next();
-            command = command.toLowerCase();
-
-            if (command.equals("q")) {
-                keepGoing = false;
-            } else {
-                processCommandCourses(command, selectedCourseList);
-            }
-        }
-
-        System.out.println("\nCome Back Soon To Update Your Marks, Good Luck With Your Studies!");
-    }
-
-
-    // MODIFIES: this
-    // EFFECTS: processes user command
-    private void processCommandCourses(String command, CourseList selectedCourseList) {
-        if (command.equals("a")) {
-            addCourse(selectedCourseList);
-        } else if (command.equals("r")) {
-            System.out.print("Which Course Would You Like To Remove? Please Type Name Exactly");
-            removeCourse(selectedCourseList);
-        } else if (command.equals("s")) {
-            showCourses(selectedCourseList);
-        } else if (command.equals("v")) {
-            viewCourse(selectedCourseList);
-        } else if (command.equals("g")) {
-            showGrade(selectedCourseList);
-        } else if (command.equals("n")) {
-            newCourseList();
-        } else if (command.equals("b")) {
-            runCourses(selectedCourseList);
-        } else {
-            System.out.println("Selection not valid...");
-        }
-    }
-
-    // MODIFIES: this
-    // EFFECTS: processes user command
-    private void processCommandAssignments(String command, CourseList selectedCourseList) {
-        if (command.equals("a")) {
-            System.out.print("Please Enter The Rubric Of The Course In This Order: Quiz, Assignment, Midterm Exam, "
-                    + "Projects, Participation, Final Exam ");
-            addCourse(selectedCourseList);
-        } else if (command.equals("r")) {
-            System.out.print("Which Course Would You Like To Remove? Please Type Name Exactly");
-            removeCourse(selectedCourseList);
-        } else if (command.equals("s")) {
-            showCourses(selectedCourseList);
-        } else if (command.equals("v")) {
-            viewCourse(selectedCourseList);
-        } else if (command.equals("g")) {
-            showGrade(selectedCourseList);
-        } else if (command.equals("n")) {
-            newCourseList();
-        } else {
-            System.out.println("Selection not valid...");
-        }
     }
 
     // EFFECTS: displays menu of Course Lists to user
@@ -151,37 +81,7 @@ public class GradeCalculatorApp {
         for (int i = 0; i < program.getCourseLists().size(); i++) {
             System.out.println("press" + " " + i + " " + "for" + " " + program.getCourseLists().get(i).getName());
         }
-        System.out.println("\nb -> go back to home screen");
-
     }
-
-    // EFFECTS: displays menu of Course options to user
-    private void displayMenu2(CourseList selectedCourseList) {
-        System.out.print("You are now in the" + " " + selectedCourseList.getName() + " " + "course list");
-        System.out.println("\nSelect from:");
-        System.out.println("\ta -> add course");
-        System.out.println("\td -> delete course");
-        System.out.println("\ts -> show courses");
-        System.out.println("\tv -> view coursed details");
-        System.out.println("\tg -> show overall grade");
-        System.out.println("\tn -> new course list");
-        System.out.println("\tb -> go back to home screen");
-        System.out.println("\tq -> quit");
-    }
-
-    // EFFECTS: displays menu of Courses to user
-    private void displayMenu3(CourseList selectedCourseList) {
-        System.out.println("\nSelect from:");
-        for (int i = 0; i < selectedCourseList.getCourses().size(); i++) {
-            System.out.println("press" + " " + i + " " + "for" + " " + selectedCourseList.getCourses().get(i).getName())
-            ;
-        }
-        System.out.println("\nb -> go back to home screen");
-
-    }
-
-
-
 
     // MODIFIES: this
     // EFFECTS: initializes
@@ -229,9 +129,97 @@ public class GradeCalculatorApp {
         return program.getCourseLists().get(command);
     }
 
+    //EFFECTS: show grade of the current course list so far
+    private void showGrade(CourseList c) {
+        System.out.println("Your Grade For This Course List Is:" + " " + courseList.calculateCourseListGrade(c));
+    }
+
+    //EFFECTS: create a new course list
+    private void newCourseList() {
+        CourseList c2 = new CourseList(input.next());
+    }
+
+    // END OF MULTIPLE WORK LISTS
+
+
+
+    // ADDS COURSES TO A SPECIFIED WORK LIST
+
+    // MODIFIES: this
+    // EFFECTS: processes user input
+    private void runCourses(CourseList selectedCourseList) {
+        boolean keepGoing = true;
+        String command = null;
+        Course course = null;
+
+        init();
+
+        while (keepGoing) {
+            displayMenu2(selectedCourseList);
+            command = input.next();
+            command = command.toLowerCase();
+
+            if (command.equals("q")) {
+                keepGoing = false;
+            } else {
+                processCommandCourses(command, selectedCourseList);
+            }
+        }
+
+        System.out.println("\nCome Back Soon To Update Your Marks, Good Luck With Your Studies!");
+    }
+
+    // MODIFIES: this
+    // EFFECTS: processes user command
+    private void processCommandCourses(String command, CourseList selectedCourseList) {
+        if (command.equals("a")) {
+            addCourse(selectedCourseList);
+        } else if (command.equals("r")) {
+            System.out.print("Which Course Would You Like To Remove? Please Type Name Exactly");
+            removeCourse(selectedCourseList);
+        } else if (command.equals("s")) {
+            showCourses(selectedCourseList);
+        } else if (command.equals("v")) {
+            viewCourse(selectedCourseList);
+        } else if (command.equals("g")) {
+            showGrade(selectedCourseList);
+        } else if (command.equals("n")) {
+            newCourseList();
+        } else if (command.equals("b")) {
+            displayMenu();
+            processCommand(input.next());
+        } else {
+            System.out.println("Selection not valid...");
+        }
+    }
+
+    // EFFECTS: displays menu of Course options to user
+    private void displayMenu2(CourseList selectedCourseList) {
+        System.out.print("You are now in the" + " " + selectedCourseList.getName() + " " + "course list");
+        System.out.println("\nSelect from:");
+        System.out.println("\ta -> add course");
+        System.out.println("\tr -> remove course");
+        System.out.println("\ts -> show courses");
+        System.out.println("\tv -> view course details");
+        System.out.println("\tg -> show overall grade for this course list");
+        System.out.println("\tb -> go back to home screen");
+        System.out.println("\tTo quit, press b and then q");
+    }
+
+    // EFFECTS: displays menu of Courses to user
+    private void displayMenu3(CourseList selectedCourseList) {
+        System.out.println("\nSelect from:");
+        for (int i = 0; i < selectedCourseList.getCourses().size(); i++) {
+            System.out.println("press" + " " + i + " " + "for" + " " + selectedCourseList.getCourses().get(i).getName())
+            ;
+        }
+    }
+
+
     // EFFECTS: adds course to course list
     private void addCourse(CourseList c) {
-        System.out.print("Please Enter The Rubric Criteria Of The Course You Would Like To Enter, Type The First Number"
+        System.out.print("Please Enter The Rubric Criteria Of The Course You Would Like To Enter In This Order: "
+                + "Quizzes, Assignments, Midterm Exams, Projects, Participation, Final Exams.  Type The First Number"
                 + " And Then Enter.");
         rubric = new Rubric(input.nextInt(), input.nextInt(), input.nextInt(), input.nextInt(), input.nextInt(),
                 input.nextInt());
@@ -254,12 +242,12 @@ public class GradeCalculatorApp {
         }
     }
 
-    // EFFECTS: show course list
-    private ArrayList<Course> showCourses(CourseList c) {
-        return c.getCourses();
+    // EFFECTS: show courses in course list
+    private void showCourses(CourseList c) {
+        System.out.println("Your Courses For This Course List Are:" + " " + c.getCourses());
     }
 
-    //EFFECTS: view details of specific course !!!
+    //EFFECTS: view details of specific course
     private void viewCourse(CourseList c) {
         System.out.println("Which Course Would You Like To View?");
         c.getCourses();
@@ -273,14 +261,178 @@ public class GradeCalculatorApp {
         return courseList.getCourses().get(command);
     }
 
-    //EFFECTS: show grade of the current course list so far
-    private double showGrade(CourseList c) {
-        return courseList.calculateCourseListGrade(c);
+    // END OF ADDING COURSES TO SPECIFIED WORK LIST
+
+
+
+    // ADDING ASSIGNMENTS TO A SPECIFIED COURSE
+
+    // MODIFIES: this
+    // EFFECTS: processes user input !!!
+    private void runOneCourse(Course selectedCourse) {
+        boolean keepGoing = true;
+        String command = null;
+        init();
+
+        while (keepGoing) {
+            displayMenu4(selectedCourse);
+            command = input.next();
+            command = command.toLowerCase();
+
+            if (command.equals("q")) {
+                keepGoing = false;
+            } else {
+                processCommandAssignments(command, selectedCourse);
+            }
+        }
+
+        System.out.println("\nCome Back Soon To Update Your Marks, Good Luck With Your Studies!");
     }
 
-    //EFFECTS: create a new course list
-    private void newCourseList() {
-        CourseList c2 = new CourseList(input.next());
+    // MODIFIES: this
+    // EFFECTS: processes user command
+    private void processCommandAssignments(String command, Course selectedCourse) {
+        if (command.equals("a")) {
+            System.out.print("Please Enter The Rubric Of The Course In This Order: Quiz, Assignment, Midterm Exam, "
+                    + "Projects, Participation, Final Exam ");
+            addAssignment(selectedCourse);
+        } else if (command.equals("r")) {
+            System.out.print("Which Course Would You Like To Remove? Please Type Name Exactly");
+            removeAssignment(selectedCourse);
+        } else if (command.equals("s")) {
+            showAssignments(selectedCourse);
+        } else if (command.equals("v")) {
+            viewAssignment(selectedCourse);
+        } else if (command.equals("g")) {
+            showGradeInCourse(selectedCourse);
+        } else if (command.equals("b")) {
+            displayMenu();
+            processCommand(command);
+        } else {
+            System.out.println("Selection not valid...");
+        }
     }
+
+    // EFFECTS: displays menu of Assignments to user
+    private void displayMenu4(Course selectedCourse) {
+        System.out.print("You are now in the" + " " + selectedCourse.getName() + " " + "course");
+        System.out.println("\nSelect from:");
+        System.out.println("\ta -> add assignment");
+        System.out.println("\tr -> remove assignment");
+        System.out.println("\ts -> show assignments in course");
+        System.out.println("\tg -> show overall grade for course");
+        System.out.println("\tb -> go back to home screen");
+        System.out.println("\tTo quit, press b and then q");
+    }
+
+    // EFFECTS: adds assignment to course
+    private void addAssignment(Course c) {
+        System.out.print("Please Enter Name Of Assignment You Would Like To Add And The Grade in %. Eg: (Quiz 1 50%, "
+                + "Assignment 1, etc");
+        WorkCompleted work = new WorkCompleted(input.next(), input.nextInt());
+        c.addCompletedWork(work);
+        System.out.println(work.getName() + "added");
+    }
+
+    // EFFECTS: removes assignment from course
+    private void removeAssignment(Course c) {
+        for (WorkCompleted work : c.getCompletedWork()) {
+            if (c.getName().equals(input.next())) {
+                c.removeCompletedWork(work);
+                System.out.println(work.getName() + " " + "Removed");
+
+            } else {
+                System.out.println("No Work In List Matches, Please Type Name Again. It Is Case Sensitive");
+            }
+        }
+    }
+
+    //EFFECTS: view details of specific assignment
+    private void viewAssignment(Course c) {
+        System.out.println("Which Assignment Would You Like To View?");
+        displayMenu5(c);
+        WorkCompleted work = selectWork(input.nextInt());
+        runOneAssignment(work);
+    }
+
+    // EFFECTS: show grade of course
+    private void showGradeInCourse(Course c) {
+        System.out.println("Your Grade In" + " " + c.getName() + " " + "is" + " " + c.getGrade());
+    }
+
+    // EFFECTS: shows assignments in the course
+    private void showAssignments(Course c) {
+        System.out.println("Here Are Your Assignments For The Course:" + " " + c.getCompletedWork());
+    }
+
+    // END OF ADDING ASSIGNMENTS
+
+
+
+    // VIEWING ASSIGNMENTS
+
+    // MODIFIES: this
+    // EFFECTS: processes user input
+    private void runOneAssignment(WorkCompleted selectedWork) {
+        boolean keepGoing = true;
+        String command = null;
+        Course course = null;
+
+        init();
+
+        while (keepGoing) {
+            displayMenu6(selectedWork);
+            command = input.next();
+            command = command.toLowerCase();
+
+            if (command.equals("q")) {
+                keepGoing = false;
+            } else {
+                processCommandOneAssignment(command, selectedWork);
+            }
+        }
+
+        System.out.println("\nCome Back Soon To Update Your Marks, Good Luck With Your Studies!");
+    }
+
+    // MODIFIES: this
+    // EFFECTS: processes user command
+    private void processCommandOneAssignment(String command, WorkCompleted selectedWork) {
+        if (command.equals("g")) {
+            showGradeInAssignment(selectedWork);
+        } else if (command.equals("b")) {
+            displayMenu();
+            processCommand(input.next());
+        } else {
+            System.out.println("Selection not valid...");
+        }
+    }
+
+    private void displayMenu5(Course selectedCourse) {
+        System.out.println("\nSelect from:");
+        for (int i = 0; i < selectedCourse.getCompletedWork().size(); i++) {
+            System.out.println("press" + " " + i + " " + "for" + " "
+                    + selectedCourse.getCompletedWork().get(i).getName());
+        }
+    }
+
+    // EFFECTS: prompts user to select course list and returns it
+    private WorkCompleted selectWork(int command) {
+        return course.getCompletedWork().get(command);
+    }
+
+    private void displayMenu6(WorkCompleted selectedWork) {
+        System.out.print("You are now in the" + " " + selectedWork.getName() + " " + "page");
+        System.out.println("\nSelect from:");
+        System.out.println("\tg -> show grade for assignment");
+        System.out.println("\tb -> go back to home screen");
+        System.out.println("\tTo quit, press b and then q");
+    }
+
+    // EFFECTS: shows the grade for the specified assignment
+    private void showGradeInAssignment(WorkCompleted work) {
+        System.out.println("Here Is Your Grade For The Assignment:" + " " + work.getGrade());
+    }
+
 
 }
