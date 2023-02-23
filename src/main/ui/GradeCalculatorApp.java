@@ -53,7 +53,10 @@ public class GradeCalculatorApp {
             System.out.print("What Name Would You Like To Give New Course List?");
             addNewCourseList();
         } else if (command.equals("r")) {
-            System.out.print("Which Course List Would You Like To Remove? Please Type Name Exactly");
+            System.out.print("Which Course List Would You Like To Remove? Please Type Name Exactly: ");
+            for (CourseList c : program.getCourseLists()) {
+                System.out.println(c.getName());
+            }
             removeCourseLists();
         } else if (command.equals("v")) {
             viewCourseList();
@@ -101,6 +104,7 @@ public class GradeCalculatorApp {
 
     }
 
+    // REQUIRES: must have at least two course lists in the program for this to run
     // MODIFIES: this
     // EFFECTS: removes course list
     private void removeCourseLists() {
@@ -229,6 +233,7 @@ public class GradeCalculatorApp {
         System.out.println(course.getName() + "added");
     }
 
+    // REQUIRES: more than two courses are needed in the course list before this is able to remove one of them
     // EFFECTS: removes course from course list
     private void removeCourse(CourseList c) {
         for (Course course : c.getCourses()) {
@@ -244,7 +249,10 @@ public class GradeCalculatorApp {
 
     // EFFECTS: show courses in course list
     private void showCourses(CourseList c) {
-        System.out.println("Your Courses For This Course List Are:" + " " + c.getCourses());
+        System.out.println("Your Courses For This Course List Are: " + " ");
+        for (int i = 0; i < c.getCourses().size(); i++) {
+            System.out.println(c.getCourses().get(i).getName());
+        }
     }
 
     //EFFECTS: view details of specific course
@@ -293,11 +301,9 @@ public class GradeCalculatorApp {
     // EFFECTS: processes user command
     private void processCommandAssignments(String command, Course selectedCourse) {
         if (command.equals("a")) {
-            System.out.print("Please Enter The Rubric Of The Course In This Order: Quiz, Assignment, Midterm Exam, "
-                    + "Projects, Participation, Final Exam ");
             addAssignment(selectedCourse);
         } else if (command.equals("r")) {
-            System.out.print("Which Course Would You Like To Remove? Please Type Name Exactly");
+            System.out.print("Which Assignment Would You Like To Remove? Please Type Name Exactly");
             removeAssignment(selectedCourse);
         } else if (command.equals("s")) {
             showAssignments(selectedCourse);
@@ -327,8 +333,8 @@ public class GradeCalculatorApp {
 
     // EFFECTS: adds assignment to course
     private void addAssignment(Course c) {
-        System.out.print("Please Enter Name Of Assignment You Would Like To Add And The Grade in %. Eg: (Quiz 1 50%, "
-                + "Assignment 1, etc");
+        System.out.println("Please Enter Name Of Assignment You Would Like To Add. Eg: Assignment 1");
+        System.out.println("Please Enter The Grade Of The Assignment You Added");
         WorkCompleted work = new WorkCompleted(input.next(), input.nextInt());
         c.addCompletedWork(work);
         System.out.println(work.getName() + "added");
