@@ -8,6 +8,7 @@ public class University {
 
     // EFFECTS: creates a university with their name, specific program, and average grade needed for admission
     public University(String name, String program, int admissionAverage) {
+
         this.name = name;
         this.program = program;
         this.admissionAverage = admissionAverage;
@@ -26,7 +27,7 @@ public class University {
     public int getAdmissionAverage() {
         return admissionAverage;
     }
-    //
+
 
     University ubcScience = new University("UBC", "Science", 94);
 

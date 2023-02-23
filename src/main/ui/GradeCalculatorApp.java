@@ -72,7 +72,7 @@ public class GradeCalculatorApp {
         System.out.println("\nHi and welcome to my application! I hope this will be of benefit to you!");
         System.out.println("\nSelect from:");
         System.out.println("\ta -> add course list");
-        System.out.println("\tr -> remove course list");
+        System.out.println("\tr -> remove course list (must have at least two to work)");
         System.out.println("\tv -> view course list");
         System.out.println("\tb -> go back to home screen");
         System.out.println("\tq -> quit");
@@ -169,8 +169,6 @@ public class GradeCalculatorApp {
                 processCommandCourses(command, selectedCourseList);
             }
         }
-
-        System.out.println("\nCome Back Soon To Update Your Marks, Good Luck With Your Studies!");
     }
 
     // MODIFIES: this
@@ -205,12 +203,12 @@ public class GradeCalculatorApp {
         System.out.print("You are now in the" + " " + selectedCourseList.getName() + " " + "course list");
         System.out.println("\nSelect from:");
         System.out.println("\ta -> add course");
-        System.out.println("\tr -> remove course");
+        System.out.println("\tr -> remove course (must have at least two to work)");
         System.out.println("\ts -> show courses");
         System.out.println("\tv -> view course details");
         System.out.println("\tg -> show overall grade for this course list");
         System.out.println("\tb -> go back to home screen");
-        System.out.println("\tTo quit, press b and then q");
+        System.out.println("\tq -> back");
     }
 
     // EFFECTS: displays menu of Courses to user
@@ -297,8 +295,6 @@ public class GradeCalculatorApp {
                 processCommandAssignments(command, selectedCourse);
             }
         }
-
-        System.out.println("\nCome Back Soon To Update Your Marks, Good Luck With Your Studies!");
     }
 
     // MODIFIES: this
@@ -331,12 +327,12 @@ public class GradeCalculatorApp {
         System.out.print("You are now in the" + " " + selectedCourse.getName() + " " + "course");
         System.out.println("\nSelect from:");
         System.out.println("\ta -> add assignment");
-        System.out.println("\tr -> remove assignment");
+        System.out.println("\tr -> remove assignment (must have at least two to work)");
         System.out.println("\ts -> show assignments in course");
         System.out.println("\tg -> show overall grade for course");
         System.out.println("\tv -> view assignment details");
         System.out.println("\tb -> go back to home screen");
-        System.out.println("\tTo quit, press b and then q");
+        System.out.println("\tq -> back");
     }
 
     // EFFECTS: adds assignment to course
@@ -372,7 +368,7 @@ public class GradeCalculatorApp {
     // EFFECTS: show grade of course
     private void showGradeInCourse(Course c) {
         System.out.println("Your Grade In" + " " + c.getName() + " " + "is" + " "
-                + c.calculateFinalExamGrade(c.getCompletedWork()));
+                + c.calculateGradeFinal(c.getCompletedWork()));
     }
 
     // EFFECTS: shows assignments in the course
@@ -409,8 +405,6 @@ public class GradeCalculatorApp {
                 processCommandOneAssignment(command, selectedWork);
             }
         }
-
-        System.out.println("\nCome Back Soon To Update Your Marks, Good Luck With Your Studies!");
     }
 
     // MODIFIES: this
@@ -444,7 +438,7 @@ public class GradeCalculatorApp {
         System.out.println("\nSelect from:");
         System.out.println("\tg -> show grade for assignment");
         System.out.println("\tb -> go back to home screen");
-        System.out.println("\tTo quit, press b and then q");
+        System.out.println("\tq -> back");
     }
 
     // EFFECTS: shows the grade for the specified assignment

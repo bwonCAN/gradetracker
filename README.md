@@ -43,7 +43,7 @@ GPA.
 
 ## *User Stories*
 - As a user, I want to be able to add an arbitrary number of classes 
-- As a user, I want to be able to select a university and program of interest
+- As a user, I want to be able to select a university and program of interest and determine if my grade from this current course list is competitive with the program
 - As a user, I want to be able to add and remove an arbitrary number of assignments and the grades associated with it
 - As a user, I want to be able to view my current grade in the course
 - As a user, I want to be able to add an arbitrary number of course lists (eg: Term 1, Winter 2022, etc)
