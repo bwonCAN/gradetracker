@@ -135,7 +135,7 @@ public class GradeCalculatorApp {
 
     //EFFECTS: show grade of the current course list so far
     private void showGrade(CourseList c) {
-        System.out.println("Your Grade For This Course List Is:" + " " + courseList.calculateCourseListGrade(c));
+        System.out.println("Your Grade For This Course List Is:" + " " + c.calculateCourseListGrade(c));
     }
 
     //EFFECTS: create a new course list
@@ -179,7 +179,10 @@ public class GradeCalculatorApp {
         if (command.equals("a")) {
             addCourse(selectedCourseList);
         } else if (command.equals("r")) {
-            System.out.print("Which Course Would You Like To Remove? Please Type Name Exactly");
+            System.out.print("Which Course Would You Like To Remove? Please Type Name Exactly: ");
+            for (Course c : selectedCourseList.getCourses()) {
+                System.out.println(c.getName());
+            }
             removeCourse(selectedCourseList);
         } else if (command.equals("s")) {
             showCourses(selectedCourseList);
@@ -230,7 +233,7 @@ public class GradeCalculatorApp {
         System.out.print("Please Enter The Name Of The Course You Would Like To Add");
         course = new Course(input.next(), rubric);
         c.addCourse(course);
-        System.out.println(course.getName() + "added");
+        System.out.println(course.getName() + " " + "added");
     }
 
     // REQUIRES: more than two courses are needed in the course list before this is able to remove one of them
@@ -257,19 +260,20 @@ public class GradeCalculatorApp {
 
     //EFFECTS: view details of specific course
     private void viewCourse(CourseList c) {
-        System.out.println("Which Course Would You Like To View?");
         c.getCourses();
+        System.out.println("Which Course Would You Like To View?");
         displayMenu3(c);
-        Course selectedCourse = selectCourse(input.nextInt());
+        Course selectedCourse = selectCourse(input.nextInt(), c);
         runOneCourse(selectedCourse);
     }
 
     // EFFECTS: prompts user to select course list and returns it
-    private Course selectCourse(int command) {
-        return courseList.getCourses().get(command);
+    private Course selectCourse(int command, CourseList c) {
+        return c.getCourses().get(command);
     }
 
     // END OF ADDING COURSES TO SPECIFIED WORK LIST
+
 
 
 
@@ -304,6 +308,9 @@ public class GradeCalculatorApp {
             addAssignment(selectedCourse);
         } else if (command.equals("r")) {
             System.out.print("Which Assignment Would You Like To Remove? Please Type Name Exactly");
+            for (WorkCompleted c : course.getCompletedWork()) {
+                System.out.println(c.getName());
+            }
             removeAssignment(selectedCourse);
         } else if (command.equals("s")) {
             showAssignments(selectedCourse);
@@ -327,17 +334,18 @@ public class GradeCalculatorApp {
         System.out.println("\tr -> remove assignment");
         System.out.println("\ts -> show assignments in course");
         System.out.println("\tg -> show overall grade for course");
+        System.out.println("\tv -> view assignment details");
         System.out.println("\tb -> go back to home screen");
         System.out.println("\tTo quit, press b and then q");
     }
 
     // EFFECTS: adds assignment to course
     private void addAssignment(Course c) {
-        System.out.println("Please Enter Name Of Assignment You Would Like To Add. Eg: Assignment 1");
+        System.out.println("Please Enter Name Of Assignment You Would Like To Add. (Eg: Assignment 1) and press enter");
         System.out.println("Please Enter The Grade Of The Assignment You Added");
         WorkCompleted work = new WorkCompleted(input.next(), input.nextInt());
         c.addCompletedWork(work);
-        System.out.println(work.getName() + "added");
+        System.out.println(work.getName() + " " + "added");
     }
 
     // EFFECTS: removes assignment from course
@@ -363,12 +371,16 @@ public class GradeCalculatorApp {
 
     // EFFECTS: show grade of course
     private void showGradeInCourse(Course c) {
-        System.out.println("Your Grade In" + " " + c.getName() + " " + "is" + " " + c.getGrade());
+        System.out.println("Your Grade In" + " " + c.getName() + " " + "is" + " "
+                + c.calculateFinalExamGrade(c.getCompletedWork()));
     }
 
     // EFFECTS: shows assignments in the course
     private void showAssignments(Course c) {
-        System.out.println("Here Are Your Assignments For The Course:" + " " + c.getCompletedWork());
+        System.out.println("Here Are Your Assignments For The Course: ");
+        for (int i = 0; i < c.getCompletedWork().size(); i++) {
+            System.out.println(c.getCompletedWork().get(i).getName());
+        }
     }
 
     // END OF ADDING ASSIGNMENTS
