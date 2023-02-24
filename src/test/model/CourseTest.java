@@ -68,8 +68,8 @@ public class CourseTest {
     public void testCalculateQuizGrade() {
         testCourse.addCompletedWork(new WorkCompleted("Quiz 1", 100));
         testCourse.addCompletedWork(new WorkCompleted("Quiz 2", 50));
-        testCourse.addCompletedWork(new WorkCompleted("Quiz 3", 30));
-        testCourse.addCompletedWork(new WorkCompleted("Quiz 4", 20));
+        testCourse.addCompletedWork(new WorkCompleted("quiz 3", 30));
+        testCourse.addCompletedWork(new WorkCompleted("quiz 4", 20));
         ArrayList<WorkCompleted> quizGrades = testCourse.getCompletedWork();
         assertEquals(10, testRubric.getQuizValue());
         assertEquals(5, testCourse.calculateQuizGrade(quizGrades));
@@ -85,10 +85,14 @@ public class CourseTest {
     public void testCalculateAssignmentGrade() {
         testCourse.addCompletedWork(new WorkCompleted("Assignment 1", 10));
         testCourse.addCompletedWork(new WorkCompleted("Assignment 2", 20));
-        testCourse.addCompletedWork(new WorkCompleted("Assignment 3", 30));
-        testCourse.addCompletedWork(new WorkCompleted("Assignment 4", 40));
+        testCourse.addCompletedWork(new WorkCompleted("assignment 3", 30));
+        testCourse.addCompletedWork(new WorkCompleted("assignment 4", 40));
         ArrayList<WorkCompleted> assignmentGrades = testCourse.getCompletedWork();
         assertEquals(2.5, testCourse.calculateAssignmentGrade(assignmentGrades));
+        testCourse.addCompletedWork(new WorkCompleted("quiz 1", 40));
+        testCourse.addCompletedWork(new WorkCompleted("project 1", 40));
+        assertEquals(2.5, testCourse.calculateAssignmentGrade(assignmentGrades));
+
 
     }
 
@@ -96,33 +100,47 @@ public class CourseTest {
     public void testCalculateMidtermGrade() {
         testCourse.addCompletedWork(new WorkCompleted("Midterm 1", 10));
         testCourse.addCompletedWork(new WorkCompleted("Midterm 2", 20));
-        testCourse.addCompletedWork(new WorkCompleted("Midterm 3", 30));
-        testCourse.addCompletedWork(new WorkCompleted("Midterm 4", 40));
+        testCourse.addCompletedWork(new WorkCompleted("midterm 3", 30));
+        testCourse.addCompletedWork(new WorkCompleted("midterm 4", 40));
         ArrayList<WorkCompleted> midtermGrades = testCourse.getCompletedWork();
         assertEquals(5, testCourse.calculateMidtermGrade(midtermGrades));
+        testCourse.addCompletedWork(new WorkCompleted("quiz 1", 40));
+        testCourse.addCompletedWork(new WorkCompleted("project 1", 40));
+        ArrayList<WorkCompleted> midtermGrades1 = testCourse.getCompletedWork();
+        assertEquals(5, testCourse.calculateMidtermGrade(midtermGrades1));
+
 
     }
 
     @Test
     public void testProjectAssignmentGrade() {
         testCourse.addCompletedWork(new WorkCompleted("Project 1", 80));
-        testCourse.addCompletedWork(new WorkCompleted("Project 2", 90));
+        testCourse.addCompletedWork(new WorkCompleted("project 2", 90));
         ArrayList<WorkCompleted> projectGrades = testCourse.getCompletedWork();
         assertEquals(25.5, testCourse.calculateProjectGrade(projectGrades));
+        testCourse.addCompletedWork(new WorkCompleted("quiz 1", 40));
+        assertEquals(25.5, testCourse.calculateProjectGrade(projectGrades));
+
+
+
+
     }
 
     @Test
     public void testCalculateParticipationGrade() {
         testCourse.addCompletedWork(new WorkCompleted("Participation", 90));
+        testCourse.addCompletedWork(new WorkCompleted("participation", 10));
+        testCourse.addCompletedWork(new WorkCompleted("Midterm 1", 90));
         ArrayList<WorkCompleted> participationGrade = testCourse.getCompletedWork();
-        assertEquals(4.5, testCourse.calculateParticipationGrade(participationGrade));
+        assertEquals(2.5, testCourse.calculateParticipationGrade(participationGrade));
     }
 
     @Test
     public void testFinalExamGrade() {
         testCourse.addCompletedWork(new WorkCompleted("Final Exam", 100));
+        testCourse.addCompletedWork(new WorkCompleted("final Exam", 60));
         ArrayList<WorkCompleted> finalExamGrade = testCourse.getCompletedWork();
-        assertEquals(25, testCourse.calculateFinalExamGrade(finalExamGrade));
+        assertEquals(20, testCourse.calculateFinalExamGrade(finalExamGrade));
     }
 
 //    @Test
