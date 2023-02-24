@@ -509,87 +509,133 @@ public class GradeCalculatorApp {
     @SuppressWarnings({"checkstyle:MethodLength", "checkstyle:SuppressWarnings"})
     private void processCommandUniversity(String command, CourseList selectedCourseList) {
         if (command.equals("f")) {
-            System.out.println("You Have Chosen: University Of Toronto");
-            displayMenuPrograms(selectedCourseList);
-            processCommandToronto(input.next(), selectedCourseList);
-
+            chooseUT(command, selectedCourseList);
         } else if (command.equals("g")) {
-            System.out.println("You Have Chosen: University Of British Columbia");
-            displayMenuPrograms(selectedCourseList);
-            processCommandUBC(input.next(),selectedCourseList);
-
+            chooseUBC(command, selectedCourseList);
         } else if (command.equals("h")) {
-            System.out.println("You Have Chosen: McGill University");
-            displayMenuPrograms(selectedCourseList);
-            processCommandMcGill(input.next(),selectedCourseList);
-
+            chooseMcGill(command, selectedCourseList);
         } else if (command.equals("i")) {
-            System.out.println("You Have Chosen: McMaster University");
-            displayMenuPrograms(selectedCourseList);
-            processCommandMcMaster(input.next(),selectedCourseList);
-
+            chooseMcMaster(command, selectedCourseList);
         } else if (command.equals("j")) {
-            System.out.println("You Have Chosen: University Of Montreal");
-            displayMenuPrograms(selectedCourseList);
-            processCommandMontreal(input.next(),selectedCourseList);
-
+            chooseMontreal(command, selectedCourseList);
         } else if (command.equals("k")) {
-            System.out.println("You Have Chosen: University Of Alberta");
-            displayMenuPrograms(selectedCourseList);
-            processCommandAlberta(input.next(),selectedCourseList);
-
+            chooseAlberta(command, selectedCourseList);
         } else if (command.equals("l")) {
-            System.out.println("You Have Chosen: University Of Ottawa");
-            displayMenuPrograms(selectedCourseList);
-            processCommandOttawa(input.next(),selectedCourseList);
-
+            chooseOttawa(command, selectedCourseList);
         } else if (command.equals("m")) {
-            System.out.println("You Have Chosen: University Of Calgary");
-            displayMenuPrograms(selectedCourseList);
-            processCommandCalgary(input.next(),selectedCourseList);
-
+            chooseCalgary(command, selectedCourseList);
         } else if (command.equals("n")) {
-            System.out.println("You Have Chosen: University Of Waterloo");
-            displayMenuPrograms(selectedCourseList);
-            processCommandWaterloo(input.next(),selectedCourseList);
-
+            chooseWaterloo(command, selectedCourseList);
         } else if (command.equals("o")) {
-            System.out.println("You Have Chosen: Western University");
-            displayMenuPrograms(selectedCourseList);
-            processCommandWestern(input.next(),selectedCourseList);
-
+            chooseWestern(command, selectedCourseList);
         } else if (command.equals("p")) {
-            System.out.println("You Have Chosen: Universte Laval");
-            displayMenuPrograms(selectedCourseList);
-            processCommandLaval(input.next(),selectedCourseList);
-
+            chooseLaval(command, selectedCourseList);
         } else if (command.equals("r")) {
-            System.out.println("You Have Chosen: Queen's University");
-            displayMenuPrograms(selectedCourseList);
-            processCommandQueens(input.next(),selectedCourseList);
-
+            chooseQueens(command, selectedCourseList);
         } else if (command.equals("s")) {
-            System.out.println("You Have Chosen: Simon Fraser University");
-            displayMenuPrograms(selectedCourseList);
-            processCommandSFU(input.next(),selectedCourseList);
-
+            chooseSFU(command, selectedCourseList);
         } else if (command.equals("t")) {
-            System.out.println("You Have Chosen: Dalhousie University");
-            displayMenuPrograms(selectedCourseList);
-            processCommandDalhousie(input.next(),selectedCourseList);
-
+            chooseDalhousie(command, selectedCourseList);
         } else if (command.equals("u")) {
-            System.out.println("You Have Chosen: University Of Victoria");
-            displayMenuPrograms(selectedCourseList);
-            processCommandUvic(input.next(),selectedCourseList);
-
+            chooseUvic(command, selectedCourseList);
         } else if (command.equals("b")) {
             displayMenu();
             processCommand(input.next());
-
         } else {
             System.out.println("Selection not valid...");
         }
+    }
+
+    // Chosen University
+
+    private void chooseUT(String command, CourseList selectedCourseList) {
+        System.out.println("You Have Chosen: University Of Toronto");
+        displayMenuPrograms(selectedCourseList);
+        processCommandToronto(input.next(), selectedCourseList);
+    }
+
+    private void chooseUBC(String command, CourseList selectedCourseList) {
+        System.out.println("You Have Chosen: University Of British Columbia");
+        displayMenuPrograms(selectedCourseList);
+        processCommandUBC(input.next(),selectedCourseList);
+    }
+
+    private void chooseMcGill(String command, CourseList selectedCourseList) {
+        System.out.println("You Have Chosen: McGill University");
+        displayMenuPrograms(selectedCourseList);
+        processCommandMcGill(input.next(),selectedCourseList);
+    }
+
+    private void chooseMcMaster(String command, CourseList selectedCourseList) {
+        System.out.println("You Have Chosen: McMaster University");
+        displayMenuPrograms(selectedCourseList);
+        processCommandMcMaster(input.next(),selectedCourseList);
+    }
+
+    private void chooseMontreal(String command, CourseList selectedCourseList) {
+        System.out.println("You Have Chosen: University Of Montreal");
+        displayMenuPrograms(selectedCourseList);
+        processCommandMontreal(input.next(),selectedCourseList);
+    }
+
+    private void chooseAlberta(String command, CourseList selectedCourseList) {
+        System.out.println("You Have Chosen: University Of Alberta");
+        displayMenuPrograms(selectedCourseList);
+        processCommandAlberta(input.next(),selectedCourseList);
+    }
+
+    private void chooseOttawa(String command, CourseList selectedCourseList) {
+        System.out.println("You Have Chosen: University Of Ottawa");
+        displayMenuPrograms(selectedCourseList);
+        processCommandOttawa(input.next(),selectedCourseList);
+    }
+
+    private void chooseCalgary(String command, CourseList selectedCourseList) {
+        System.out.println("You Have Chosen: University Of Calgary");
+        displayMenuPrograms(selectedCourseList);
+        processCommandCalgary(input.next(),selectedCourseList);
+    }
+
+    private void chooseWaterloo(String command, CourseList selectedCourseList) {
+        System.out.println("You Have Chosen: University Of Waterloo");
+        displayMenuPrograms(selectedCourseList);
+        processCommandWaterloo(input.next(),selectedCourseList);
+    }
+
+    private void chooseWestern(String command, CourseList selectedCourseList) {
+        System.out.println("You Have Chosen: Western University");
+        displayMenuPrograms(selectedCourseList);
+        processCommandWestern(input.next(),selectedCourseList);
+    }
+
+    private void chooseLaval(String command, CourseList selectedCourseList) {
+        System.out.println("You Have Chosen: Universte Laval");
+        displayMenuPrograms(selectedCourseList);
+        processCommandLaval(input.next(),selectedCourseList);
+    }
+
+    private void chooseQueens(String command, CourseList selectedCourseList) {
+        System.out.println("You Have Chosen: Queen's University");
+        displayMenuPrograms(selectedCourseList);
+        processCommandQueens(input.next(),selectedCourseList);
+    }
+
+    private void chooseSFU(String command, CourseList selectedCourseList) {
+        System.out.println("You Have Chosen: Simon Fraser University");
+        displayMenuPrograms(selectedCourseList);
+        processCommandSFU(input.next(),selectedCourseList);
+    }
+
+    private void chooseDalhousie(String command, CourseList selectedCourseList) {
+        System.out.println("You Have Chosen: Dalhousie University");
+        displayMenuPrograms(selectedCourseList);
+        processCommandDalhousie(input.next(),selectedCourseList);
+    }
+
+    private void chooseUvic(String command, CourseList selectedCourseList) {
+        System.out.println("You Have Chosen: University Of Victoria");
+        displayMenuPrograms(selectedCourseList);
+        processCommandUvic(input.next(),selectedCourseList);
     }
 
     public void displayMenuPrograms(CourseList selectedCourseList) {
@@ -624,6 +670,8 @@ public class GradeCalculatorApp {
             System.out.println("Selection not valid...");
         }
     }
+
+    // process commands for the universities
 
     // EFFECTS: passes user command
     private void processCommandToronto(String command, CourseList selectedCourseList) {
@@ -716,41 +764,21 @@ public class GradeCalculatorApp {
     }
 
 
+
     // MODIFIES: this
     // EFFECTS: processes user command
-    @SuppressWarnings({"checkstyle:MethodLength", "checkstyle:SuppressWarnings"})
     private void processCommandPrograms(String command, CourseList selectedCourseList,
                                         ArrayList<University> allPrograms) {
         if (command.equals("c")) {
-            System.out.println("You have selected: Science");
-            System.out.println("Would you like to calculate if your grades are competitive?");
-            String program = "Science";
-            displayYesNo(selectedCourseList);
-            processCommandYesNo(command, selectedCourseList, allPrograms, program);
+            science(command, selectedCourseList, allPrograms);
         } else if (command.equals("d")) {
-            System.out.println("You have selected: Business");
-            System.out.println("Would you like to calculate if your grades are competitive?");
-            String program = "Business";
-            displayYesNo(selectedCourseList);
-            processCommandYesNo(command, selectedCourseList, allPrograms, program);
+            business(command, selectedCourseList, allPrograms);
         } else if (command.equals("e")) {
-            System.out.println("You have selected: Arts");
-            System.out.println("Would you like to calculate if your grades are competitive?");
-            String program = "Arts";
-            displayYesNo(selectedCourseList);
-            processCommandYesNo(command, selectedCourseList, allPrograms, program);
+            arts(command, selectedCourseList, allPrograms);
         } else if (command.equals("f")) {
-            System.out.println("You have selected: Applied Science/Engineering");
-            System.out.println("Would you like to calculate if your grades are competitive?");
-            String program = "Applied Science/Engineering";
-            displayYesNo(selectedCourseList);
-            processCommandYesNo(command, selectedCourseList, allPrograms, program);
+            appliedScience(command, selectedCourseList, allPrograms);
         } else if (command.equals("g")) {
-            System.out.println("You have selected: Kinesiology");
-            System.out.println("Would you like to calculate if your grades are competitive?");
-            String program = "Kinesiology";
-            displayYesNo(selectedCourseList);
-            processCommandYesNo(command, selectedCourseList, allPrograms, program);
+            kinesiology(command, selectedCourseList, allPrograms);
         } else if (command.equals("b")) {
             displayMenu();
             processCommand(input.next());
@@ -779,6 +807,48 @@ public class GradeCalculatorApp {
                     + " " + admissionAvg + ", you are not competitive for the program");
         }
     }
+
+    // Programs:
+    private void science(String command, CourseList selectedCourseList, ArrayList<University> allPrograms) {
+        System.out.println("You have selected: Science");
+        System.out.println("Would you like to calculate if your grades are competitive?");
+        String program = "Science";
+        displayYesNo(selectedCourseList);
+        processCommandYesNo(command, selectedCourseList, allPrograms, program);
+    }
+
+    private void business(String command, CourseList selectedCourseList, ArrayList<University> allPrograms) {
+        System.out.println("You have selected: Business");
+        System.out.println("Would you like to calculate if your grades are competitive?");
+        String program = "Business";
+        displayYesNo(selectedCourseList);
+        processCommandYesNo(command, selectedCourseList, allPrograms, program);
+    }
+
+    private void arts(String command, CourseList selectedCourseList, ArrayList<University> allPrograms) {
+        System.out.println("You have selected: Arts");
+        System.out.println("Would you like to calculate if your grades are competitive?");
+        String program = "Arts";
+        displayYesNo(selectedCourseList);
+        processCommandYesNo(command, selectedCourseList, allPrograms, program);
+    }
+
+    private void appliedScience(String command, CourseList selectedCourseList, ArrayList<University> allPrograms) {
+        System.out.println("You have selected: Applied Science/Engineering");
+        System.out.println("Would you like to calculate if your grades are competitive?");
+        String program = "Applied Science/Engineering";
+        displayYesNo(selectedCourseList);
+        processCommandYesNo(command, selectedCourseList, allPrograms, program);
+    }
+
+    private void kinesiology(String command, CourseList selectedCourseList, ArrayList<University> allPrograms) {
+        System.out.println("You have selected: Kinesiology");
+        System.out.println("Would you like to calculate if your grades are competitive?");
+        String program = "Kinesiology";
+        displayYesNo(selectedCourseList);
+        processCommandYesNo(command, selectedCourseList, allPrograms, program);
+    }
+
 
 
 
