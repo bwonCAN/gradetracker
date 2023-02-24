@@ -718,6 +718,7 @@ public class GradeCalculatorApp {
 
     // MODIFIES: this
     // EFFECTS: processes user command
+    @SuppressWarnings({"checkstyle:MethodLength", "checkstyle:SuppressWarnings"})
     private void processCommandPrograms(String command, CourseList selectedCourseList,
                                         ArrayList<University> allPrograms) {
         if (command.equals("c")) {
