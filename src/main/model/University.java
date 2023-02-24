@@ -1,5 +1,7 @@
 package model;
 
+import java.util.ArrayList;
+
 // represents a university name along with their popular programs and average grade for admission
 public class University {
     private String name;
@@ -27,9 +29,6 @@ public class University {
     public int getAdmissionAverage() {
         return admissionAverage;
     }
-
-
-    University ubcScience = new University("UBC", "Science", 94);
 
 }
 

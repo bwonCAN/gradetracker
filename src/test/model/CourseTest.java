@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class CourseTest {
-    private Rubric testRubric; // rubric for the course
+    private Rubric testRubric;
     private Course testCourse;
 
     @BeforeEach
