@@ -814,7 +814,7 @@ public class GradeCalculatorApp {
         System.out.println("Would you like to calculate if your grades are competitive?");
         String program = "Science";
         displayYesNo(selectedCourseList);
-        processCommandYesNo(command, selectedCourseList, allPrograms, program);
+        processCommandYesNo((input.next()), selectedCourseList, allPrograms, program);
     }
 
     private void business(String command, CourseList selectedCourseList, ArrayList<University> allPrograms) {
@@ -822,7 +822,7 @@ public class GradeCalculatorApp {
         System.out.println("Would you like to calculate if your grades are competitive?");
         String program = "Business";
         displayYesNo(selectedCourseList);
-        processCommandYesNo(command, selectedCourseList, allPrograms, program);
+        processCommandYesNo((input.next()), selectedCourseList, allPrograms, program);
     }
 
     private void arts(String command, CourseList selectedCourseList, ArrayList<University> allPrograms) {
@@ -830,7 +830,7 @@ public class GradeCalculatorApp {
         System.out.println("Would you like to calculate if your grades are competitive?");
         String program = "Arts";
         displayYesNo(selectedCourseList);
-        processCommandYesNo(command, selectedCourseList, allPrograms, program);
+        processCommandYesNo((input.next()), selectedCourseList, allPrograms, program);
     }
 
     private void appliedScience(String command, CourseList selectedCourseList, ArrayList<University> allPrograms) {
@@ -838,7 +838,7 @@ public class GradeCalculatorApp {
         System.out.println("Would you like to calculate if your grades are competitive?");
         String program = "Applied Science/Engineering";
         displayYesNo(selectedCourseList);
-        processCommandYesNo(command, selectedCourseList, allPrograms, program);
+        processCommandYesNo((input.next()), selectedCourseList, allPrograms, program);
     }
 
     private void kinesiology(String command, CourseList selectedCourseList, ArrayList<University> allPrograms) {
@@ -846,7 +846,7 @@ public class GradeCalculatorApp {
         System.out.println("Would you like to calculate if your grades are competitive?");
         String program = "Kinesiology";
         displayYesNo(selectedCourseList);
-        processCommandYesNo(command, selectedCourseList, allPrograms, program);
+        processCommandYesNo((input.next()), selectedCourseList, allPrograms, program);
     }
 
 
