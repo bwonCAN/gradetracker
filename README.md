@@ -12,14 +12,14 @@ there are many universities that I did not know of when I was in high school. I 
 benefits future prospective university students with their university application. Good luck! 
 
 ## *Function:*
-This application will perform multiple functions. Firstly, this application will allow you to calculate
-what grade on exams you need to achieve a certain grade. Ideally, the application will allow for submission
+This application will perform multiple functions. Firstly, this application will allow the user to calculate
+their overall across grade across multiple courses. In addition, the user will be able to input assignments for each
+course and receive the overall grade for the specified course. Ideally, the application will allow for submission
 of a pdf syllabus that will organize the syllabus into appropriate sections their grading. The user will be 
-able to add an arbitrary number of classes, submit arbitrary number of syllabuses, etc. Secondly, the application
-will allow the user to select various Canadian universities of interest as well as their general programs. Thirdly, 
-the application will determine how far the user's grade is from the average of the specified program. Lastly, the
-application will determine what future grade is needed to obtain the university program average to have a competitive 
-GPA. 
+able to add an arbitrary number of classes, submit arbitrary number of syllabuses, arbitrary number of completed work, 
+etc. Secondly, the application will allow the user to select various Canadian universities of interest as well as their 
+general programs. Lastly, the application will determine whether the user is competitive for the specified program at a
+chosen university based on the latest information (currently 2022).
 
 ### *Included Universities (Top 15 of 2023):*
 - UNIVERSITY OF TORONTO (Toronto, Ontario)
