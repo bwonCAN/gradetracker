@@ -71,6 +71,10 @@ public class GradeCalculatorApp {
             removeCourseLists();
         } else if (command.equals("v")) {
             viewCourseList();
+        } else if (command.equals("s")) {
+            saveProgram();
+        } else if (command.equals("l")) {
+            loadProgram();
         } else if (command.equals("b")) {
             displayMenu();
             processCommand(input.next());
@@ -85,6 +89,8 @@ public class GradeCalculatorApp {
         System.out.println("\ta -> add course list");
         System.out.println("\tr -> remove course list (must have at least two to work)");
         System.out.println("\tv -> view course list");
+        System.out.println("\ts -> save work room to file");
+        System.out.println("\tl -> load work room from file");
         System.out.println("\tb -> go back to home screen");
         System.out.println("\tq -> quit");
     }
@@ -211,7 +217,6 @@ public class GradeCalculatorApp {
         System.out.println("\ta -> add course");
         System.out.println("\tr -> remove course (must have at least two to work)");
         System.out.println("\ts -> show courses");
-        System.out.println("\tv -> view course details");
         System.out.println("\tg -> show overall grade for this course list");
         System.out.println("\tv -> view course details");
         System.out.println("\tc -> determine if my grade is competitive for university");
@@ -800,7 +805,7 @@ public class GradeCalculatorApp {
     }
 
 
-    // EFFECTS: saves the workroom to file
+    // EFFECTS: saves the Program to file
     private void saveProgram() {
         try {
             jsonWriter.open();
@@ -813,8 +818,8 @@ public class GradeCalculatorApp {
     }
 
     // MODIFIES: this
-    // EFFECTS: loads workroom from file
-    private void loadWorkRoom() {
+    // EFFECTS: loads Program from file
+    private void loadProgram() {
         try {
             program = jsonReader.read();
             System.out.println("Loaded from " + JSON_STORE);

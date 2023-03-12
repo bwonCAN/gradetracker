@@ -1,9 +1,6 @@
 package persistence;
 
-import model.Course;
-import model.CourseList;
-import model.Program;
-import model.Rubric;
+import model.*;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -49,6 +46,7 @@ public class JsonReader {
         return wr;
     }
 
+    // PROCESSES COURSE LISTS(plural)
     // MODIFIES: wr
     // EFFECTS: parses course lists from JSON object and adds them to program
     private void addCourseLists(Program wr, JSONObject jsonObject) {
@@ -59,27 +57,44 @@ public class JsonReader {
         }
     }
 
+    // PROCESSES COURSE LIST / COURSES
     // MODIFIES: wr
-    // EFFECTS: parses work completed from JSON object and adds it to workroom
+    // EFFECTS: parses course list from JSON object and adds it to program
     private void addCourseList(Program wr, JSONObject jsonObject) {
         String name = jsonObject.getString("name");
         JSONArray jsonArray = jsonObject.getJSONArray("courses");
+        CourseList courseList = new CourseList(name);
         for (Object json : jsonArray) {
             JSONObject nextCourse = (JSONObject) json;
-            addCourse(wr, nextCourse);
+            addCourse(courseList, nextCourse);
         }
-        CourseList courseList = new CourseList(name);
         wr.addCourseList(courseList);
     }
 
+
+    // PROCESSES COURSE / WORKS COMPLETED (may need to add grade)
     // MODIFIES: wr
     // EFFECTS: parses course from JSON object and adds it to program
-    private void addCourse(Program wr, JSONObject jsonObject) {
-//        String name = jsonObject.getString("name");
-//        Rubric rubric = jsonObject.get("rubric");
-//        Category category = Category.valueOf(jsonObject.getString("category"));
-//        Thingy thingy = new Thingy(name, category);
-//        wr.addThingy(thingy);
+    private void addCourse(CourseList courseList, JSONObject jsonObject) {
+        Rubric initRubric = new Rubric(0,0,0,0,0,
+                0);
+        String name = jsonObject.getString("name");
+        JSONArray jsonArray = jsonObject.getJSONArray("completed work");
+        Course course = new Course(name, initRubric);
+        for (Object json : jsonArray) {
+            JSONObject nextWorkCompleted = (JSONObject) json;
+            addWorkCompleted(course, nextWorkCompleted);
+        }
+        courseList.addCourse(course);
+    }
+
+    // MODIFIES: course list
+    // EFFECTS: parses thingy from JSON object and adds it to workroom
+    private void addWorkCompleted(Course course, JSONObject jsonObject) {
+        String name = jsonObject.getString("name");
+        double grade = jsonObject.getDouble("grade");
+        WorkCompleted workCompleted = new WorkCompleted(name, grade);
+        course.addCompletedWork(workCompleted);
     }
 
 }
