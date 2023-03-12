@@ -1,7 +1,10 @@
 package model;
 
+import org.json.JSONObject;
+import persistence.Writable;
+
 // mark breakdown for a class
-public class Rubric {
+public class Rubric implements Writable {
     private int quizzes; // value of all quizzes in the course, 0 if not needed
     private int assignments; // value of all assignments in the course, 0 if not needed
     private int midterm; // value of midterm in the course, 0 if not needed
@@ -46,7 +49,18 @@ public class Rubric {
     public int getFinalExamValue() {
         return finalExam;
     }
-    //
 
+    @Override
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        json.put("quizzes", quizzes);
+        json.put("assignments", assignments);
+        json.put("midterm", midterm);
+        json.put("project", project);
+        json.put("participation", participation);
+        json.put("final exam", finalExam);
+
+        return json;
+    }
 
 }

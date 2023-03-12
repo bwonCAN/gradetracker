@@ -1,9 +1,13 @@
 package model;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+import persistence.Writable;
+
 import java.util.ArrayList;
 
 // Represents a course in school with the course name and the rubric of the specific course and the grade so far
-public class Course {
+public class Course implements Writable {
     private String name; // name of the course
     private Rubric rubric; // rubric for the course
     private ArrayList<WorkCompleted> completedWork; // list of completed work (quizzes, exams, projects, etc)
@@ -138,6 +142,27 @@ public class Course {
     public void clearNumeratorAndGrades() {
         numerator = 0;
         grades1.clear();
+    }
+
+    @Override
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        json.put("name", name);
+        json.put("rubric", rubric);
+        json.put("grade", grade);
+        json.put("completed work", completedWorkToJson());
+        return json;
+    }
+
+    // EFFECTS: returns things in this completed work as a JSON array
+    private JSONArray completedWorkToJson() {
+        JSONArray jsonArray = new JSONArray();
+
+        for (WorkCompleted t : completedWork) {
+            jsonArray.put(t.toJson());
+        }
+
+        return jsonArray;
     }
 
 }

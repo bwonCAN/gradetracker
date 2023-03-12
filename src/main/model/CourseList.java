@@ -1,9 +1,13 @@
 package model;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+import persistence.Writable;
+
 import java.util.ArrayList;
 
 // a list of the classes a student is currently taking this term
-public class CourseList {
+public class CourseList implements Writable {
     private String name; // a name for the current term
     private ArrayList<Course> courses; // a list of courses for this term
 
@@ -51,6 +55,25 @@ public class CourseList {
             grade += c.getGrade();
         }
         return (grade / courses.getCourses().size());
+    }
+
+    @Override
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        json.put("name", name);
+        json.put("courses", coursesToJson());
+        return json;
+    }
+
+    // EFFECTS: returns courses as a JSON array
+    private JSONArray coursesToJson() {
+        JSONArray jsonArray = new JSONArray();
+
+        for (Course c : courses) {
+            jsonArray.put(c.toJson());
+        }
+
+        return jsonArray;
     }
 
 }

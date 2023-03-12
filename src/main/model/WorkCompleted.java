@@ -1,7 +1,11 @@
 package model;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+import persistence.Writable;
+
 // represents all the coursework of a student, eg: quizzes, projects, midterms, finals, participation, etc
-public class WorkCompleted {
+public class WorkCompleted implements Writable {
     private String name;
     private double grade;
 
@@ -22,5 +26,12 @@ public class WorkCompleted {
     }
     //
 
+    @Override
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        json.put("name", name);
+        json.put("grade", grade);
+        return json;
+    }
 
 }

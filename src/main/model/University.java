@@ -1,9 +1,10 @@
 package model;
 
-import java.util.ArrayList;
+import org.json.JSONObject;
+import persistence.Writable;
 
 // represents a university name along with their popular programs and average grade for admission
-public class University {
+public class University implements Writable {
     private String name;
     private String program;
     private int admissionAverage;
@@ -28,6 +29,15 @@ public class University {
 
     public int getAdmissionAverage() {
         return admissionAverage;
+    }
+
+    @Override
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        json.put("name", name);
+        json.put("program", program);
+        json.put("admission average", admissionAverage);
+        return json;
     }
 
 }

@@ -1,8 +1,12 @@
 package ui;
 
 import model.*;
+import persistence.JsonReader;
+import persistence.JsonWriter;
 import ui.UniversityUIInfo;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -14,6 +18,9 @@ public class GradeCalculatorApp {
     private Rubric rubric;
     private Course course;
     private Scanner input;
+    private JsonWriter jsonWriter;
+    private JsonReader jsonReader;
+    private static final String JSON_STORE = "./data/worklists.json";
     private WorkCompleted work;
     private ArrayList<University> universities;
 
@@ -30,6 +37,8 @@ public class GradeCalculatorApp {
         boolean keepGoing = true;
         String command = null;
         program = new Program();
+        jsonWriter = new JsonWriter(JSON_STORE);
+        jsonReader = new JsonReader(JSON_STORE);
 
         init();
 
@@ -788,5 +797,29 @@ public class GradeCalculatorApp {
         montreal.add(montrealKin);
 
         return montreal;
+    }
+
+
+    // EFFECTS: saves the workroom to file
+    private void saveProgram() {
+        try {
+            jsonWriter.open();
+            jsonWriter.write(program);
+            jsonWriter.close();
+            System.out.println("Saved to " + JSON_STORE);
+        } catch (FileNotFoundException e) {
+            System.out.println("Unable to write to file: " + JSON_STORE);
+        }
+    }
+
+    // MODIFIES: this
+    // EFFECTS: loads workroom from file
+    private void loadWorkRoom() {
+        try {
+            program = jsonReader.read();
+            System.out.println("Loaded from " + JSON_STORE);
+        } catch (IOException e) {
+            System.out.println("Unable to read from file: " + JSON_STORE);
+        }
     }
 }
