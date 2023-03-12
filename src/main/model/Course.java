@@ -8,6 +8,9 @@ public class Course {
     private Rubric rubric; // rubric for the course
     private ArrayList<WorkCompleted> completedWork; // list of completed work (quizzes, exams, projects, etc)
     private double grade; // the grade for the course so far, in %
+    double numerator = 0;
+    ArrayList<WorkCompleted> grades1 = new ArrayList<>();
+
 
     // creates new course with the course name, the corresponding rubric, and list of completed work for that course
     public Course(String courseName, Rubric courseRubric) {
@@ -56,26 +59,20 @@ public class Course {
 
     // REQUIRES: WorkCompleted must not be empty
     // EFFECTS: calculates grades from a list of work completed
-    public double calculateGrade(ArrayList<WorkCompleted> grades) {
-        double numerator = 0;
+    public void calculateGrade(ArrayList<WorkCompleted> grades, String capitalWork, String work) {
         for (int k = 0; k < grades.size(); k++) {
-            numerator = numerator + grades.get(k).getGrade();
+            if ((grades.get(k).getName().contains(capitalWork)) || (grades.get(k).getName().contains(work))) {
+                numerator = numerator + grades.get(k).getGrade();
+                grades1.add(grades.get(k));
+            }
         }
-        grade = (numerator / grades.size());
-        return grade;
+
     }
 
     // REQUIRES: WorkCompleted must not be empty
     // EFFECTS: calculates grade of all quizzes, scaled by rubric
-    public double calculateQuizGrade(ArrayList<WorkCompleted> quizGrades) {
-        double numerator = 0;
-        ArrayList<WorkCompleted> grades1 = new ArrayList<>();
-        for (int k = 0; k < quizGrades.size(); k++) {
-            if ((quizGrades.get(k).getName().contains("Quiz")) || (quizGrades.get(k).getName().contains("quiz"))) {
-                numerator = numerator + quizGrades.get(k).getGrade();
-                grades1.add(quizGrades.get(k));
-            }
-        }
+    public double calculateQuizGrade(ArrayList<WorkCompleted> grades) {
+        calculateGrade(grades, "Quiz", "quiz");
         return (((numerator / grades1.size()) * rubric.getQuizValue()) / 100);
     }
 
@@ -83,14 +80,7 @@ public class Course {
     // REQUIRES: WorkCompleted must not be empty
     // EFFECTS: calculates grade of all assignments, scaled by rubric
     public double calculateAssignmentGrade(ArrayList<WorkCompleted> grades) {
-        double numerator = 0;
-        ArrayList<WorkCompleted> grades1 = new ArrayList<>();
-        for (int k = 0; k < grades.size(); k++) {
-            if ((grades.get(k).getName().contains("Assign")) || (grades.get(k).getName().contains("assign"))) {
-                numerator = numerator + grades.get(k).getGrade();
-                grades1.add(grades.get(k));
-            }
-        }
+        calculateGrade(grades, "Assign", "assign");
         return (((numerator / grades1.size()) * rubric.getAssignmentValue()) / 100);
     }
 
@@ -98,42 +88,21 @@ public class Course {
     // REQUIRES: WorkCompleted must not be empty
     // EFFECTS: calculates grade of all midterms, scaled by rubric
     public double calculateMidtermGrade(ArrayList<WorkCompleted> grades) {
-        double numerator = 0;
-        ArrayList<WorkCompleted> grades1 = new ArrayList<>();
-        for (int k = 0; k < grades.size(); k++) {
-            if ((grades.get(k).getName().contains("Mid")) || (grades.get(k).getName().contains("mid"))) {
-                numerator = numerator + grades.get(k).getGrade();
-                grades1.add(grades.get(k));
-            }
-        }
+        calculateGrade(grades, "Midterm", "midterm");
         return (((numerator / grades1.size()) * rubric.getMidtermValue()) / 100);
     }
 
     // REQUIRES: WorkCompleted must not be empty
     // EFFECTS: calculates grade of all projects, scaled by rubric
     public double calculateProjectGrade(ArrayList<WorkCompleted> grades) {
-        double numerator = 0;
-        ArrayList<WorkCompleted> grades1 = new ArrayList<>();
-        for (int k = 0; k < grades.size(); k++) {
-            if ((grades.get(k).getName().contains("Proj")) || (grades.get(k).getName().contains("proj"))) {
-                numerator = numerator + grades.get(k).getGrade();
-                grades1.add(grades.get(k));
-            }
-        }
+        calculateGrade(grades, "Project", "project");
         return (((numerator / grades1.size()) * rubric.getProjectValue()) / 100);
     }
 
     // REQUIRES: WorkCompleted must not be empty
     // EFFECTS: calculates grade of all participation, scaled by rubric
     public double calculateParticipationGrade(ArrayList<WorkCompleted> grades) {
-        double numerator = 0;
-        ArrayList<WorkCompleted> grades1 = new ArrayList<>();
-        for (int k = 0; k < grades.size(); k++) {
-            if ((grades.get(k).getName().contains("Partici")) || (grades.get(k).getName().contains("partici"))) {
-                numerator = numerator + grades.get(k).getGrade();
-                grades1.add(grades.get(k));
-            }
-        }
+        calculateGrade(grades, "Partici", "partici");
         return (((numerator / grades1.size()) * rubric.getParticipationValue()) / 100);
     }
 
@@ -141,14 +110,7 @@ public class Course {
     // REQUIRES: WorkCompleted must not be empty
     // EFFECTS: calculates grade of all final exams, scaled by rubric
     public double calculateFinalExamGrade(ArrayList<WorkCompleted> grades) {
-        double numerator = 0;
-        ArrayList<WorkCompleted> grades1 = new ArrayList<>();
-        for (int k = 0; k < grades.size(); k++) {
-            if ((grades.get(k).getName().contains("Final")) || (grades.get(k).getName().contains("final"))) {
-                numerator = numerator + grades.get(k).getGrade();
-                grades1.add(grades.get(k));
-            }
-        }
+        calculateGrade(grades, "Final", "final");
         return (((numerator / grades1.size()) * rubric.getFinalExamValue()) / 100);
     }
 
@@ -156,14 +118,26 @@ public class Course {
     // REQUIRES: every submethod needs to have a value, otherwise throws NaN error
     // EFFECTS: calculates overall grade of course
     public double calculateGradeFinal(ArrayList<WorkCompleted> grades) {
-        this.grade = ((calculateFinalExamGrade(grades))
-                + (calculateParticipationGrade(grades))
-                + (calculateProjectGrade(grades))
-                + (calculateMidtermGrade(grades))
-                + (calculateAssignmentGrade(grades))
-                + (calculateQuizGrade(grades)));
-
+        double finalExamGrade = calculateFinalExamGrade(grades);
+        clearNumeratorAndGrades();
+        double participationGrade = calculateParticipationGrade(grades);
+        clearNumeratorAndGrades();
+        double projectGrade = calculateProjectGrade(grades);
+        clearNumeratorAndGrades();
+        double midtermGrade = calculateMidtermGrade(grades);
+        clearNumeratorAndGrades();
+        double assignmentGrade = calculateAssignmentGrade(grades);
+        clearNumeratorAndGrades();
+        double quizGrade = calculateQuizGrade(grades);
+        clearNumeratorAndGrades();
+        this.grade = finalExamGrade + participationGrade + projectGrade + midtermGrade + assignmentGrade + quizGrade;
         return this.grade;
+    }
+
+    // EFFECTS: resets numerator to 0 and clears the list of grades1
+    public void clearNumeratorAndGrades() {
+        numerator = 0;
+        grades1.clear();
     }
 
 }

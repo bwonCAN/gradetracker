@@ -482,16 +482,6 @@ public class GradeCalculatorApp {
         System.out.println("\th -> McGill University");
         System.out.println("\ti -> McMaster University");
         System.out.println("\tj -> University of Montreal");
-        System.out.println("\tk -> University of Alberta");
-        System.out.println("\tl -> University of Ottawa");
-        System.out.println("\tm -> University of Calgary");
-        System.out.println("\tn -> University of Waterloo");
-        System.out.println("\to -> Western University");
-        System.out.println("\tp -> Universte Laval");
-        System.out.println("\tr -> Queen's University");
-        System.out.println("\ts -> Simon Fraser University");
-        System.out.println("\tt -> Dalhousie University");
-        System.out.println("\tu -> University of Victoria");
         System.out.println("\tv -> go back to home screen");
         System.out.println("\tq -> back");
         System.out.println("\tb -> go back to home screen");
@@ -501,7 +491,6 @@ public class GradeCalculatorApp {
 
     // MODIFIES: this
     // EFFECTS: processes user command
-    @SuppressWarnings({"checkstyle:MethodLength", "checkstyle:SuppressWarnings"})
     private void processCommandUniversity(String command, CourseList selectedCourseList) {
         if (command.equals("f")) {
             chooseUT(command, selectedCourseList);
@@ -513,26 +502,6 @@ public class GradeCalculatorApp {
             chooseMcMaster(command, selectedCourseList);
         } else if (command.equals("j")) {
             chooseMontreal(command, selectedCourseList);
-        } else if (command.equals("k")) {
-            chooseAlberta(command, selectedCourseList);
-        } else if (command.equals("l")) {
-            chooseOttawa(command, selectedCourseList);
-        } else if (command.equals("m")) {
-            chooseCalgary(command, selectedCourseList);
-        } else if (command.equals("n")) {
-            chooseWaterloo(command, selectedCourseList);
-        } else if (command.equals("o")) {
-            chooseWestern(command, selectedCourseList);
-        } else if (command.equals("p")) {
-            chooseLaval(command, selectedCourseList);
-        } else if (command.equals("r")) {
-            chooseQueens(command, selectedCourseList);
-        } else if (command.equals("s")) {
-            chooseSFU(command, selectedCourseList);
-        } else if (command.equals("t")) {
-            chooseDalhousie(command, selectedCourseList);
-        } else if (command.equals("u")) {
-            chooseUvic(command, selectedCourseList);
         } else if (command.equals("b")) {
             displayMenu();
             processCommand(input.next());
@@ -573,65 +542,7 @@ public class GradeCalculatorApp {
         processCommandMontreal(input.next(),selectedCourseList);
     }
 
-    private void chooseAlberta(String command, CourseList selectedCourseList) {
-        System.out.println("You Have Chosen: University Of Alberta");
-        displayMenuPrograms(selectedCourseList);
-        processCommandAlberta(input.next(),selectedCourseList);
-    }
 
-    private void chooseOttawa(String command, CourseList selectedCourseList) {
-        System.out.println("You Have Chosen: University Of Ottawa");
-        displayMenuPrograms(selectedCourseList);
-        processCommandOttawa(input.next(),selectedCourseList);
-    }
-
-    private void chooseCalgary(String command, CourseList selectedCourseList) {
-        System.out.println("You Have Chosen: University Of Calgary");
-        displayMenuPrograms(selectedCourseList);
-        processCommandCalgary(input.next(),selectedCourseList);
-    }
-
-    private void chooseWaterloo(String command, CourseList selectedCourseList) {
-        System.out.println("You Have Chosen: University Of Waterloo");
-        displayMenuPrograms(selectedCourseList);
-        processCommandWaterloo(input.next(),selectedCourseList);
-    }
-
-    private void chooseWestern(String command, CourseList selectedCourseList) {
-        System.out.println("You Have Chosen: Western University");
-        displayMenuPrograms(selectedCourseList);
-        processCommandWestern(input.next(),selectedCourseList);
-    }
-
-    private void chooseLaval(String command, CourseList selectedCourseList) {
-        System.out.println("You Have Chosen: Universte Laval");
-        displayMenuPrograms(selectedCourseList);
-        processCommandLaval(input.next(),selectedCourseList);
-    }
-
-    private void chooseQueens(String command, CourseList selectedCourseList) {
-        System.out.println("You Have Chosen: Queen's University");
-        displayMenuPrograms(selectedCourseList);
-        processCommandQueens(input.next(),selectedCourseList);
-    }
-
-    private void chooseSFU(String command, CourseList selectedCourseList) {
-        System.out.println("You Have Chosen: Simon Fraser University");
-        displayMenuPrograms(selectedCourseList);
-        processCommandSFU(input.next(),selectedCourseList);
-    }
-
-    private void chooseDalhousie(String command, CourseList selectedCourseList) {
-        System.out.println("You Have Chosen: Dalhousie University");
-        displayMenuPrograms(selectedCourseList);
-        processCommandDalhousie(input.next(),selectedCourseList);
-    }
-
-    private void chooseUvic(String command, CourseList selectedCourseList) {
-        System.out.println("You Have Chosen: University Of Victoria");
-        displayMenuPrograms(selectedCourseList);
-        processCommandUvic(input.next(),selectedCourseList);
-    }
 
     public void displayMenuPrograms(CourseList selectedCourseList) {
         System.out.println("Which Program Are You Interested In?");
@@ -639,8 +550,6 @@ public class GradeCalculatorApp {
         System.out.println("\tc -> Science");
         System.out.println("\td -> Business");
         System.out.println("\te -> Arts");
-        System.out.println("\tf -> Applied Science/Engineering");
-        System.out.println("\tg -> Kinesiology");
         System.out.println("\tb -> go back to home screen");
         System.out.println("\tq -> back");
     }
@@ -698,65 +607,6 @@ public class GradeCalculatorApp {
         processCommandPrograms(command, selectedCourseList, montrealPrograms);
     }
 
-    // EFFECTS: passes user command
-    private void processCommandAlberta(String command, CourseList selectedCourseList) {
-        ArrayList<University> albertaPrograms = albertaPrograms();
-        processCommandPrograms(command, selectedCourseList, albertaPrograms);
-    }
-
-    // EFFECTS: passes user command
-    private void processCommandOttawa(String command, CourseList selectedCourseList) {
-        ArrayList<University> programs = ottawaPrograms();
-        processCommandPrograms(command, selectedCourseList, programs);
-    }
-
-    // EFFECTS: passes user command
-    private void processCommandCalgary(String command, CourseList selectedCourseList) {
-        ArrayList<University> programs = calgaryPrograms();
-        processCommandPrograms(command, selectedCourseList, programs);
-    }
-
-    // EFFECTS: passes user command
-    private void processCommandWaterloo(String command, CourseList selectedCourseList) {
-        ArrayList<University> programs = waterlooPrograms();
-        processCommandPrograms(command, selectedCourseList, programs);
-    }
-
-    // EFFECTS: passes user command
-    private void processCommandWestern(String command, CourseList selectedCourseList) {
-        ArrayList<University> programs = westernPrograms();
-        processCommandPrograms(command, selectedCourseList, programs);
-    }
-
-    // EFFECTS: passes user command
-    private void processCommandLaval(String command, CourseList selectedCourseList) {
-        ArrayList<University> programs = lavalPrograms();
-        processCommandPrograms(command, selectedCourseList, programs);
-    }
-
-    // EFFECTS: passes user command
-    private void processCommandQueens(String command, CourseList selectedCourseList) {
-        ArrayList<University> programs = queensPrograms();
-        processCommandPrograms(command, selectedCourseList, programs);
-    }
-
-    // EFFECTS: passes user command
-    private void processCommandSFU(String command, CourseList selectedCourseList) {
-        ArrayList<University> programs = sfuPrograms();
-        processCommandPrograms(command, selectedCourseList, programs);
-    }
-
-    // EFFECTS: passes user command
-    private void processCommandDalhousie(String command, CourseList selectedCourseList) {
-        ArrayList<University> programs = dalhousiePrograms();
-        processCommandPrograms(command, selectedCourseList, programs);
-    }
-
-    // EFFECTS: passes user command
-    private void processCommandUvic(String command, CourseList selectedCourseList) {
-        ArrayList<University> programs = uvicPrograms();
-        processCommandPrograms(command, selectedCourseList, programs);
-    }
 
 
 
@@ -770,10 +620,6 @@ public class GradeCalculatorApp {
             business(selectedCourseList, allPrograms);
         } else if (command.equals("e")) {
             arts(selectedCourseList, allPrograms);
-        } else if (command.equals("f")) {
-            appliedScience(selectedCourseList, allPrograms);
-        } else if (command.equals("g")) {
-            kinesiology(selectedCourseList, allPrograms);
         } else if (command.equals("b")) {
             displayMenu();
             processCommand(input.next());
@@ -828,21 +674,6 @@ public class GradeCalculatorApp {
         processCommandYesNo((input.next()), selectedCourseList, allPrograms, program);
     }
 
-    private void appliedScience(CourseList selectedCourseList, ArrayList<University> allPrograms) {
-        System.out.println("You have selected: Applied Science/Engineering");
-        System.out.println("Would you like to calculate if your grades are competitive?");
-        String program = "Applied Science/Engineering";
-        displayYesNo(selectedCourseList);
-        processCommandYesNo((input.next()), selectedCourseList, allPrograms, program);
-    }
-
-    private void kinesiology(CourseList selectedCourseList, ArrayList<University> allPrograms) {
-        System.out.println("You have selected: Kinesiology");
-        System.out.println("Would you like to calculate if your grades are competitive?");
-        String program = "Kinesiology";
-        displayYesNo(selectedCourseList);
-        processCommandYesNo((input.next()), selectedCourseList, allPrograms, program);
-    }
 
 
 
@@ -957,214 +788,5 @@ public class GradeCalculatorApp {
         montreal.add(montrealKin);
 
         return montreal;
-    }
-
-    public ArrayList<University> albertaPrograms() {
-        University albertaScience = new University("University of Alberta", "Science",
-                100);
-        University albertaBusiness = new University("University of Alberta", "Business",
-                100);
-        University albertaArts = new University("University of Alberta", "Arts", 100);
-        University albertaEngineering = new University("University of Alberta",
-                "Applied Science/Engineering", 100);
-        University albertaKin = new University("University of Alberta", "Kinesiology",
-                100);
-
-        ArrayList<University> alberta = new ArrayList<>();
-        alberta.add(albertaScience);
-        alberta.add(albertaBusiness);
-        alberta.add(albertaArts);
-        alberta.add(albertaEngineering);
-        alberta.add(albertaKin);
-
-        return alberta;
-    }
-
-    public ArrayList<University> ottawaPrograms() {
-        University ottawaScience = new University("University of Ottawa", "Science",
-                100);
-        University ottawaBusiness = new University("University of Ottawa", "Business",
-                100);
-        University ottawaArts = new University("University of Ottawa", "Arts", 100);
-        University ottawaEngineering = new University("University of Ottawa",
-                "Applied Science/Engineering", 100);
-        University ottawaKin = new University("University of Ottawa", "Kinesiology",
-                100);
-
-        ArrayList<University> ottawa = new ArrayList<>();
-        ottawa.add(ottawaScience);
-        ottawa.add(ottawaBusiness);
-        ottawa.add(ottawaArts);
-        ottawa.add(ottawaEngineering);
-        ottawa.add(ottawaKin);
-
-        return ottawa;
-    }
-
-    public ArrayList<University> calgaryPrograms() {
-        University calgaryScience = new University("University of Calgary", "Science",
-                100);
-        University calgaryBusiness = new University("University of Calgary", "Business",
-                100);
-        University calgaryArts = new University("University of Calgary", "Arts", 100);
-        University calgaryEngineering = new University("University of Calgary",
-                "Applied Science/Engineering", 100);
-        University calgaryKin = new University("University of Calgary", "Kinesiology",
-                100);
-
-        ArrayList<University> calgary = new ArrayList<>();
-        calgary.add(calgaryScience);
-        calgary.add(calgaryBusiness);
-        calgary.add(calgaryArts);
-        calgary.add(calgaryEngineering);
-        calgary.add(calgaryKin);
-
-        return calgary;
-    }
-
-    public ArrayList<University> waterlooPrograms() {
-        University uwScience = new University("University of Waterloo", "Science",
-                100);
-        University uwBusiness = new University("University of Waterloo", "Business",
-                100);
-        University uwArts = new University("University of Waterloo", "Arts", 100);
-        University uwEngineering = new University("University of Waterloo",
-                "Applied Science/Engineering", 100);
-        University uwKin = new University("University of Waterloo", "Kinesiology",
-                100);
-
-        ArrayList<University> waterloo = new ArrayList<>();
-        waterloo.add(uwScience);
-        waterloo.add(uwBusiness);
-        waterloo.add(uwArts);
-        waterloo.add(uwEngineering);
-        waterloo.add(uwKin);
-
-        return waterloo;
-    }
-
-    public ArrayList<University> westernPrograms() {
-        University westernScience = new University("Western University", "Science",
-                100);
-        University westernBusiness = new University("Western University", "Business",
-                100);
-        University westernArts = new University("Western University", "Arts", 100);
-        University westernEngineering = new University("Western University",
-                "Applied Science/Engineering", 100);
-        University westernKin = new University("Western University", "Kinesiology",
-                100);
-
-        ArrayList<University> western = new ArrayList<>();
-        western.add(westernScience);
-        western.add(westernBusiness);
-        western.add(westernArts);
-        western.add(westernEngineering);
-        western.add(westernKin);
-
-        return western;
-    }
-
-    public ArrayList<University> lavalPrograms() {
-        University lavalScience = new University("Universte Laval", "Science",
-                100);
-        University lavalBusiness = new University("Universte Laval", "Business",
-                100);
-        University lavalArts = new University("Universte Laval", "Arts", 100);
-        University lavalEngineering = new University("Universte Laval",
-                "Applied Science/Engineering", 100);
-        University lavalKin = new University("Universte Laval", "Kinesiology",
-                100);
-
-        ArrayList<University> laval = new ArrayList<>();
-        laval.add(lavalScience);
-        laval.add(lavalBusiness);
-        laval.add(lavalArts);
-        laval.add(lavalEngineering);
-        laval.add(lavalKin);
-
-        return laval;
-    }
-
-    public ArrayList<University> queensPrograms() {
-        University queensScience = new University("Queen's University", "Science",
-                100);
-        University queensBusiness = new University("Queen's University", "Business",
-                100);
-        University queensArts = new University("Queen's University", "Arts", 100);
-        University queensEngineering = new University("Queen's University",
-                "Applied Science/Engineering", 100);
-        University queensKin = new University("Queen's University", "Kinesiology",
-                100);
-
-        ArrayList<University> queens = new ArrayList<>();
-        queens.add(queensScience);
-        queens.add(queensBusiness);
-        queens.add(queensArts);
-        queens.add(queensEngineering);
-        queens.add(queensKin);
-
-        return queens;
-    }
-
-    public ArrayList<University> sfuPrograms() {
-        University sfuScience = new University("Simon Fraser University", "Science",
-                100);
-        University sfuBusiness = new University("Simon Fraser University", "Business",
-                100);
-        University sfuArts = new University("Simon Fraser University", "Arts", 100);
-        University sfuEngineering = new University("Simon Fraser University",
-                "Applied Science/Engineering", 100);
-        University sfuKin = new University("Simon Fraser University", "Kinesiology",
-                100);
-
-        ArrayList<University> sfu = new ArrayList<>();
-        sfu.add(sfuScience);
-        sfu.add(sfuBusiness);
-        sfu.add(sfuArts);
-        sfu.add(sfuEngineering);
-        sfu.add(sfuKin);
-
-        return sfu;
-    }
-
-    public ArrayList<University> dalhousiePrograms() {
-        University dalScience = new University("Dalhousie University", "Science",
-                100);
-        University dalBusiness = new University("Dalhousie University", "Business",
-                100);
-        University dalArts = new University("Dalhousie University", "Arts", 100);
-        University dalEngineering = new University("Dalhousie University",
-                "Applied Science/Engineering", 100);
-        University dalKin = new University("Dalhousie University", "Kinesiology",
-                100);
-
-        ArrayList<University> dalhousie = new ArrayList<>();
-        dalhousie.add(dalScience);
-        dalhousie.add(dalBusiness);
-        dalhousie.add(dalArts);
-        dalhousie.add(dalEngineering);
-        dalhousie.add(dalKin);
-
-        return dalhousie;
-    }
-
-    public ArrayList<University> uvicPrograms() {
-        University uvicScience = new University("University of Victoria", "Science",
-                100);
-        University uvicBusiness = new University("University of Victoria", "Business",
-                100);
-        University uvicArts = new University("University of Victoria", "Arts", 100);
-        University uvicEngineering = new University("University of Victoria",
-                "Applied Science/Engineering", 100);
-        University uvicKin = new University("University of Victoria", "Kinesiology",
-                100);
-
-        ArrayList<University> uvic = new ArrayList<>();
-        uvic.add(uvicScience);
-        uvic.add(uvicBusiness);
-        uvic.add(uvicArts);
-        uvic.add(uvicEngineering);
-        uvic.add(uvicKin);
-        return uvic;
     }
 }
