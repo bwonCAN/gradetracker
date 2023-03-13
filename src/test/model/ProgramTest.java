@@ -47,21 +47,21 @@ public class ProgramTest {
 
     }
 
-    @Test
-    void testJSon() {
-        ArrayList<CourseList> courseLists = new ArrayList<>();
-        courseLists.add(courseList1);
-        courseLists.add(courseList2);
+//    @Test
+//    void testJSon() {
+//        ArrayList<CourseList> courseLists = new ArrayList<>();
+//        courseLists.add(courseList1);
+//        courseLists.add(courseList2);
+//
+//    }
 
-    }
-
-    @Test
-    void testCourseListToJson() {
-        JSONObject json = new JSONObject();
-        JSONArray jsonArray = new JSONArray();
-        ArrayList<CourseList> courses = new ArrayList<>();
-        courses.add(courseList1);
-        courses.add(courseList2);
-
-    }
+//    @Test
+//    void testCourseListToJson() {
+//        JSONObject json = new JSONObject();
+//        JSONArray jsonArray = new JSONArray();
+//        ArrayList<CourseList> courses = new ArrayList<>();
+//        courses.add(courseList1);
+//        courses.add(courseList2);
+//
+//    }
 }

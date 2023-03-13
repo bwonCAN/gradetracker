@@ -1,11 +1,14 @@
 package model;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 
 public class CourseListTest {
     private Course testCourse1;
@@ -71,6 +74,32 @@ public class CourseListTest {
         testCourseList.addCourse(testCourse3);
         testCourse3.setGrade(60);
         assertEquals(70, testCourseList.calculateCourseListGrade(testCourseList));
+    }
+
+    @Test
+    void testJSon() {
+        testCourseList.addCourse(testCourse1);
+        testCourseList.addCourse(testCourse2);
+        JSONObject json = testCourseList.toJson();
+        assertEquals("Spring 2023", json.getString("name"));
+        assertEquals(json.getJSONArray("courses"), json.get("courses"));
+    }
+
+    @Test
+    void testHashCode() {
+        CourseList test2 = new CourseList("Spring 2023");
+        assertEquals(testCourseList.hashCode(), test2.hashCode());
+
+    }
+
+    @Test
+    void testEquals() {
+        assertTrue(testCourseList.equals(new CourseList("Spring 2023")));
+        assertTrue(testCourseList.equals(testCourseList));
+        assertFalse(testCourseList.equals(new CourseList("Spring 2022")));
+        assertFalse(testCourseList.equals(null));
+        assertFalse(testCourseList.equals(("Quiz 2")));
+
     }
 
 }

@@ -1,11 +1,14 @@
 package model;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 
 public class CourseTest {
     private Rubric testRubric;
@@ -151,6 +154,37 @@ public class CourseTest {
         ArrayList<WorkCompleted> grade = testCourse.getCompletedWork();
         assertEquals(65, testCourse.calculateGradeFinal(grade));
 
+
+    }
+
+    @Test
+    void testJSon() {
+        JSONObject json = testCourse.toJson();
+        assertEquals("CPSC 210", json.getString("name"));
+        assertEquals(testRubric, json.get("rubric"));
+        assertEquals(0, json.getDouble("grade"));
+        ArrayList<WorkCompleted> works = testCourse.getCompletedWork();
+        JSONArray jsonArray = json.getJSONArray("completed work");
+        assertEquals(jsonArray, json.get("completed work"));
+
+    }
+
+    @Test
+    void testHashCode() {
+        Course test2 = new Course("CPSC 210", testRubric);
+        assertEquals(testCourse.hashCode(), test2.hashCode());
+
+    }
+
+    @Test
+    void testEquals() {
+        assertTrue(testCourse.equals(new Course("CPSC 210", testRubric)));
+        assertTrue(testCourse.equals(testCourse));
+        assertFalse(testCourse.equals(new Course("CPSC 110", testRubric)));
+        assertFalse(testCourse.equals(new Course("CPSC 210", new Rubric(0,
+                0,0,0,0,0))));
+        assertFalse(testCourse.equals(null));
+        assertFalse(testCourse.equals(("Quiz 2")));
 
     }
 }
