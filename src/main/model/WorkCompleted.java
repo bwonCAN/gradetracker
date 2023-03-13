@@ -46,6 +46,7 @@ public class WorkCompleted implements Writable {
         return Objects.hash(name, grade);
     }
 
+    // EFFECTS: converts WorkCompleted to JSON
     @Override
     public JSONObject toJson() {
         JSONObject json = new JSONObject();

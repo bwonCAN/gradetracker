@@ -70,6 +70,7 @@ public class Rubric implements Writable {
         return Objects.hash(quizzes, assignments, midterm, project, participation, finalExam);
     }
 
+    // EFFECTS: converts Rubric to JSON
     @Override
     public JSONObject toJson() {
         JSONObject json = new JSONObject();

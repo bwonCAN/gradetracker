@@ -32,6 +32,7 @@ public class Program implements Writable {
         courseLists.remove(courselist);
     }
 
+    // EFFECTS: converts Program to JSON
     @Override
     public JSONObject toJson() {
         JSONObject json = new JSONObject();

@@ -59,6 +59,7 @@ public class CourseList implements Writable {
         return (grade / courses.getCourses().size());
     }
 
+    // EFFECTS: converts Course List to JSON
     @Override
     public JSONObject toJson() {
         JSONObject json = new JSONObject();

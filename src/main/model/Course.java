@@ -164,6 +164,7 @@ public class Course implements Writable {
         return Objects.hash(name, rubric, completedWork, grade, numerator, grades1);
     }
 
+    // EFFECTS: converts Course to JSON
     @Override
     public JSONObject toJson() {
         JSONObject json = new JSONObject();

@@ -31,6 +31,7 @@ public class University implements Writable {
         return admissionAverage;
     }
 
+    // EFFECTS: converts University to JSON
     @Override
     public JSONObject toJson() {
         JSONObject json = new JSONObject();
