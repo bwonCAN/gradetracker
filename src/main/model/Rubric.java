@@ -3,6 +3,8 @@ package model;
 import org.json.JSONObject;
 import persistence.Writable;
 
+import java.util.Objects;
+
 // mark breakdown for a class
 public class Rubric implements Writable {
     private int quizzes; // value of all quizzes in the course, 0 if not needed
@@ -48,6 +50,24 @@ public class Rubric implements Writable {
 
     public int getFinalExamValue() {
         return finalExam;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Rubric rubric = (Rubric) o;
+        return quizzes == rubric.quizzes && assignments == rubric.assignments && midterm == rubric.midterm
+                && project == rubric.project && participation == rubric.participation && finalExam == rubric.finalExam;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(quizzes, assignments, midterm, project, participation, finalExam);
     }
 
     @Override

@@ -1,0 +1,59 @@
+{"course lists": [
+    {
+        "courses": [{
+            "grade": 0,
+            "name": "CPSC 210",
+            "completed work": [
+                {
+                    "grade": 100,
+                    "name": "Quiz 1"
+                },
+                {
+                    "grade": 100,
+                    "name": "Assignment 1"
+                },
+                {
+                    "grade": 100,
+                    "name": "Project 1"
+                },
+                {
+                    "grade": 100,
+                    "name": "Midterm 1"
+                },
+                {
+                    "grade": 100,
+                    "name": "Participation 1"
+                },
+                {
+                    "grade": 100,
+                    "name": "Final Exam"
+                }
+            ],
+            "rubric": "model.Rubric@589838eb"
+        }],
+        "name": "FALL 2022"
+    },
+    {
+        "courses": [
+            {
+                "grade": 0,
+                "name": "CPSC 110",
+                "completed work": [{
+                    "grade": 100,
+                    "name": "Assignment 1"
+                }],
+                "rubric": "model.Rubric@42dafa95"
+            },
+            {
+                "grade": 0,
+                "name": "EOSC113",
+                "completed work": [{
+                    "grade": 100,
+                    "name": "Quiz 1"
+                }],
+                "rubric": "model.Rubric@6500df86"
+            }
+        ],
+        "name": "Winter 2023"
+    }
+]}

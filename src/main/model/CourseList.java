@@ -5,6 +5,7 @@ import org.json.JSONObject;
 import persistence.Writable;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 // a list of the classes a student is currently taking this term
 public class CourseList implements Writable {
@@ -19,9 +20,27 @@ public class CourseList implements Writable {
 
     // GETTERS:
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        CourseList that = (CourseList) o;
+        return name.equals(that.name) && courses.equals(that.courses);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, courses);
+    }
+
     public String getName() {
         return name;
     }
+
 
     // EFFECTS: shows current courses
     public ArrayList<Course> getCourses() {

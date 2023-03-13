@@ -4,6 +4,8 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import persistence.Writable;
 
+import java.util.Objects;
+
 // represents all the coursework of a student, eg: quizzes, projects, midterms, finals, participation, etc
 public class WorkCompleted implements Writable {
     private String name;
@@ -25,6 +27,24 @@ public class WorkCompleted implements Writable {
         return name;
     }
     //
+
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        WorkCompleted that = (WorkCompleted) o;
+        return Double.compare(that.grade, grade) == 0 && name.equals(that.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, grade);
+    }
 
     @Override
     public JSONObject toJson() {

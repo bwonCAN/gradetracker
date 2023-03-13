@@ -5,6 +5,7 @@ import org.json.JSONObject;
 import persistence.Writable;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 // Represents a course in school with the course name and the rubric of the specific course and the grade so far
 public class Course implements Writable {
@@ -142,6 +143,25 @@ public class Course implements Writable {
     public void clearNumeratorAndGrades() {
         numerator = 0;
         grades1.clear();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Course course = (Course) o;
+        return Double.compare(course.grade, grade) == 0 && Double.compare(course.numerator, numerator) == 0
+                && name.equals(course.name) && rubric.equals(course.rubric)
+                && completedWork.equals(course.completedWork) && Objects.equals(grades1, course.grades1);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, rubric, completedWork, grade, numerator, grades1);
     }
 
     @Override
