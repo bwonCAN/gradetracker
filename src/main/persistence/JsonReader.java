@@ -11,6 +11,7 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.stream.Stream;
 
+// JSON Serialization Demo code referenced
 // Represents a reader that reads workroom from JSON data stored in file
 public class JsonReader {
     private String source;

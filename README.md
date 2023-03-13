@@ -10,6 +10,7 @@ The information was not consolidated into an easy-to-access format and senior st
 had to spend a significant amount of time to research the university of interest. Furthermore,
 there are many universities that I did not know of when I was in high school. I hope this application
 benefits future prospective university students with their university application. Good luck! 
+#
 
 ## *Function:*
 This application will perform multiple functions. Firstly, this application will allow the user to calculate
@@ -21,6 +22,7 @@ etc. Secondly, the application will allow the user to select various Canadian un
 general programs. Lastly, the application will determine whether the user is competitive for the specified program at a
 chosen university based on the latest information (currently 2022).
 
+#
 ### *Included Universities (Top 5 of 2023):*
 - UNIVERSITY OF TORONTO (Toronto, Ontario)
 - UNIVERSITY OF BRITISH COLUMBIA VANCOUVER (Vancouver, British Columbia)
@@ -30,7 +32,7 @@ chosen university based on the latest information (currently 2022).
 
 
 
-
+#
 [//]: # (An example of text with **bold** and *italic* fonts.  )
 
 ## *User Stories*
@@ -41,3 +43,7 @@ chosen university based on the latest information (currently 2022).
 - As a user, I want to be able to add an arbitrary number of course lists (eg: Term 1, Winter 2022, etc)
 - As a user, I want to be able to save my current list of information if I so choose (worklists, completed work, grades, etc)
 - As a user, I want to be able to load a previous list of information if I so choose.
+
+#
+#### *Citations*
+- JSON Serialization Demo code referenced, link to source: https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo

@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.fail;
 
+// JSON Serialization Demo code referenced
 public class JsonWriterTest extends JsonTest {
 
     @Test

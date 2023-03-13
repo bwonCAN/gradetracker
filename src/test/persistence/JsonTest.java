@@ -7,9 +7,9 @@ import model.WorkCompleted;
 
 import java.util.ArrayList;
 
-import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+// JSON Serialization Demo code referenced
 public class JsonTest {
 
     protected void checkWorkCompleted(String name, double grade, WorkCompleted workCompleted) {
