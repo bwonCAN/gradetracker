@@ -90,7 +90,7 @@ public class JsonReader {
     }
 
     // MODIFIES: course list
-    // EFFECTS: parses thingy from JSON object and adds it to workroom
+    // EFFECTS: parses work Completed from JSON object and adds it to program
     private void addWorkCompleted(Course course, JSONObject jsonObject) {
         String name = jsonObject.getString("name");
         double grade = jsonObject.getDouble("grade");
