@@ -2,6 +2,8 @@
 package ui;
 
 import model.*;
+import persistence.JsonReader;
+import persistence.JsonWriter;
 
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
@@ -13,6 +15,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.Scanner;
 
 public class ProgramUI extends JFrame {
     private static final int WIDTH = 1000;
@@ -24,11 +29,17 @@ public class ProgramUI extends JFrame {
     private JInternalFrame controlPanel;
     private JInternalFrame viewCourses;
     private JLabel label;
+    private Scanner input;
+    private JsonWriter jsonWriter;
+    private JsonReader jsonReader;
+    private static final String JSON_STORE = "./data/worklists.json";
 
     // EFFECTS: constructor sets up startup menu
     public ProgramUI() {
         program = new Program();
         program.addCourseList(new CourseList("default"));
+        jsonWriter = new JsonWriter(JSON_STORE);
+        jsonReader = new JsonReader(JSON_STORE);
         desktop = new JDesktopPane();
         desktop.addMouseListener(new DesktopFocusAction());
         controlPanel = new JInternalFrame("Control Panel", false, false, false,
@@ -139,8 +150,8 @@ public class ProgramUI extends JFrame {
         public void actionPerformed(ActionEvent evt) {
             viewCourses = new JInternalFrame("Course Lists", true, true, false,
                     false);
+            viewCourses.setLocation(650, 100);
             viewCourses.setLayout(new BorderLayout());
-            viewCourses.pack();
             viewCourses.setVisible(true);
 
             for (int i = 0; i < program.getCourseLists().size(); i++) {
@@ -155,6 +166,7 @@ public class ProgramUI extends JFrame {
             list.setVisibleRowCount(5);
 
             viewCourses.add(list);
+            viewCourses.setSize(200, 250);
             desktop.add(viewCourses);
         }
 
@@ -173,7 +185,7 @@ public class ProgramUI extends JFrame {
 
         @Override
         public void actionPerformed(ActionEvent evt) {
-            //Stub
+            saveProgram();
         }
     }
 
@@ -186,7 +198,7 @@ public class ProgramUI extends JFrame {
 
         @Override
         public void actionPerformed(ActionEvent evt) {
-            //Stub
+            loadProgram();
         }
     }
 
@@ -230,5 +242,28 @@ public class ProgramUI extends JFrame {
 
     public static void main(String[] args) {
         new ProgramUI();
+    }
+
+    // EFFECTS: saves the Program to file
+    private void saveProgram() {
+        try {
+            jsonWriter.open();
+            jsonWriter.write(program);
+            jsonWriter.close();
+            System.out.println("Saved to " + JSON_STORE);
+        } catch (FileNotFoundException e) {
+            System.out.println("Unable to write to file: " + JSON_STORE);
+        }
+    }
+
+    // MODIFIES: this
+    // EFFECTS: loads Program from file
+    private void loadProgram() {
+        try {
+            program = jsonReader.read();
+            System.out.println("Loaded from " + JSON_STORE);
+        } catch (IOException e) {
+            System.out.println("Unable to read from file: " + JSON_STORE);
+        }
     }
 }

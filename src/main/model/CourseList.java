@@ -95,4 +95,9 @@ public class CourseList implements Writable {
     public int hashCode() {
         return Objects.hash(name, courses);
     }
+
+    @Override
+    public String toString() {
+        return name;
+    }
 }
