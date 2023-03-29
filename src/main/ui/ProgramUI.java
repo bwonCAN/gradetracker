@@ -17,22 +17,22 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.Scanner;
+import java.util.Objects;
 
 public class ProgramUI extends JFrame {
     private static final int WIDTH = 1000;
     private static final int HEIGHT = 800;
     private Program program;
-    private JDesktopPane desktop;
+    protected static JDesktopPane desktop;
     private DefaultListModel listModel;
     private JList list;
     private JInternalFrame controlPanel;
     private JInternalFrame viewCourses;
-    private JLabel label;
-    private Scanner input;
+    private JButton select;
     private JsonWriter jsonWriter;
     private JsonReader jsonReader;
     private static final String JSON_STORE = "./data/worklists.json";
+    private CourseList courseList;
 
     // EFFECTS: constructor sets up startup menu
     public ProgramUI() {
@@ -63,6 +63,8 @@ public class ProgramUI extends JFrame {
 
         listModel = new DefaultListModel<>();
 
+
+
     }
 
     // EFFECTS: adds button panel to main menu
@@ -89,7 +91,7 @@ public class ProgramUI extends JFrame {
         @Override
         public void actionPerformed(ActionEvent evt) {
 
-            String courseListName = JOptionPane.showInputDialog(null, "Course List Name",
+            String courseListName = JOptionPane.showInputDialog(null, "Course List Name?",
                     "Enter Course List Name", JOptionPane.QUESTION_MESSAGE);
             if (courseListName != null) {
                 CourseList c = new CourseList(courseListName);
@@ -129,9 +131,11 @@ public class ProgramUI extends JFrame {
             String courseListName = JOptionPane.showInputDialog(null, "Enter Course List Name To Be Removed",
                     "Remove Course List", JOptionPane.QUESTION_MESSAGE);
             if (courseListName != null) {
-                for (CourseList c : program.getCourseLists()) {
-                    if (c.getName().equals(courseListName)) {
-                        program.removeCourseList(c);
+                for (int i = 0; i < program.getCourseLists().size(); i++) {
+                    if (program.getCourseLists().get(i).getName().equals(courseListName)) {
+                        program.removeCourseList(program.getCourseLists().get(i));
+                        listModel.remove(i);
+
                     }
                 }
             }
@@ -162,11 +166,32 @@ public class ProgramUI extends JFrame {
             list = new JList<>(listModel);
             list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
             list.setSelectedIndex(0);
-            list.addListSelectionListener(this);
             list.setVisibleRowCount(5);
 
+            viewCourseListHelper();
+
+        }
+
+        private void viewCourseListHelper() {
+            list.addListSelectionListener(this);
+            int index = list.getSelectedIndex();
+            list.setSelectedIndex(index);
+            list.ensureIndexIsVisible(index);
+
+            select = new JButton("Select");
+            select.setActionCommand("Select");
+            select.addActionListener(new SelectCourseListAction(program.getCourseLists().get(index)));
+
+            JPanel buttonPane = new JPanel();
+            buttonPane.setLayout(new BoxLayout(buttonPane,
+                    BoxLayout.LINE_AXIS));
+            buttonPane.add(select);
+            buttonPane.setBorder(BorderFactory.createEmptyBorder(5,5,5,5));
+
+
             viewCourses.add(list);
-            viewCourses.setSize(200, 250);
+            viewCourses.add(buttonPane, BorderLayout.PAGE_END);
+            viewCourses.setSize(250, 250);
             desktop.add(viewCourses);
         }
 
@@ -176,7 +201,19 @@ public class ProgramUI extends JFrame {
         }
     }
 
-    // TODO: Finish This
+    private class SelectCourseListAction extends AbstractAction implements ActionListener {
+
+        SelectCourseListAction(CourseList courseList1) {
+            super("Select Course List");
+            courseList = courseList1;
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            desktop.add(new CourseListUI(courseList, ProgramUI.this));
+        }
+    }
+
     private class SaveAction extends AbstractAction {
 
         SaveAction() {
@@ -189,7 +226,6 @@ public class ProgramUI extends JFrame {
         }
     }
 
-    // TODO: Finish This
     private class LoadAction extends AbstractAction {
 
         LoadAction() {
@@ -266,4 +302,12 @@ public class ProgramUI extends JFrame {
             System.out.println("Unable to read from file: " + JSON_STORE);
         }
     }
+
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(program, desktop, listModel, list, controlPanel, viewCourses, select, jsonWriter, jsonReader
+        );
+    }
+
 }
