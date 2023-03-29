@@ -55,4 +55,9 @@ public class WorkCompleted implements Writable {
         return json;
     }
 
+    @Override
+    public String toString() {
+        return name;
+    }
+
 }

@@ -1,10 +1,21 @@
 package ui;
 
 import model.Course;
+import model.WorkCompleted;
 
-public class CourseUI {
+import javax.swing.*;
 
-    public CourseUI(Course course, CourseListUI courseListUI) {
+public class CourseUI extends JInternalFrame {
+    private JInternalFrame courseUI;
+    private WorkCompleted workCompleted;
+    private JInternalFrame viewWorkCompleted;
+    private DefaultListModel listModel;
+    private JList list;
+    private JButton select;
+    private JDesktopPane desktopPane;
+
+    public CourseUI(Course course, JDesktopPane desktopPane) {
+        courseUI = new JInternalFrame(course.getName(), true, true, false, false);
 
 
     }

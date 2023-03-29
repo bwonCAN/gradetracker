@@ -2,28 +2,27 @@ package ui;
 
 import model.University;
 
+import javax.swing.*;
 import java.util.ArrayList;
 
-public class UniversityUIInfo extends University {
-    private String name;
-    private String program;
-    private int admissionAverage;
+public class UniversityUI extends JInternalFrame {
 
-    public UniversityUIInfo(String name, String program, int admissionAverage) {
-        super(name, program, admissionAverage);
+
+    public UniversityUI(double grade, String name) {
+        super(name, true, true, false, false);
     }
 
     // EFFECTS: returns list of UT Programs
     public ArrayList<University> utPrograms() {
         University utScience = new University("University of Toronto", "Science",
-                100);
+                94);
         University utBusiness = new University("University of Toronto", "Business",
-                100);
-        University utArts = new University("University of Toronto", "Arts", 100);
+                92);
+        University utArts = new University("University of Toronto", "Arts", 86);
         University utEngineering = new University("University of Toronto",
                 "Applied Science/Engineering", 100);
         University utKin = new University("University of Toronto", "Kinesiology",
-                100);
+                92);
         ArrayList<University> universityToronto = new ArrayList<>();
         universityToronto.add(utScience);
         universityToronto.add(utBusiness);
@@ -76,7 +75,7 @@ public class UniversityUIInfo extends University {
         return mcGill;
     }
 
-    // EFFECTS: returns list of UT Programs
+    // EFFECTS: returns list of McMaster Programs
     public ArrayList<University> mcMasterPrograms() {
         University mcMasterScience = new University("McMaster University", "Science",
                 100);

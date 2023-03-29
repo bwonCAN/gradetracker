@@ -3,7 +3,6 @@ package ui;
 import model.*;
 import persistence.JsonReader;
 import persistence.JsonWriter;
-import ui.UniversityUIInfo;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;

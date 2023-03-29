@@ -19,7 +19,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Objects;
 
-public class ProgramUI extends JFrame {
+public class ProgramUI extends JFrame implements ListSelectionListener {
     private static final int WIDTH = 1000;
     private static final int HEIGHT = 800;
     private Program program;
@@ -40,8 +40,10 @@ public class ProgramUI extends JFrame {
         program.addCourseList(new CourseList("default"));
         jsonWriter = new JsonWriter(JSON_STORE);
         jsonReader = new JsonReader(JSON_STORE);
+
         desktop = new JDesktopPane();
         desktop.addMouseListener(new DesktopFocusAction());
+
         controlPanel = new JInternalFrame("Control Panel", false, false, false,
                 false);
         controlPanel.setLayout(new BorderLayout());
@@ -62,6 +64,12 @@ public class ProgramUI extends JFrame {
         setVisible(true);
 
         listModel = new DefaultListModel<>();
+        listModel.addElement(new CourseList("default"));
+        list = new JList<>(listModel);
+        list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        list.setSelectedIndex(0);
+        list.setVisibleRowCount(5);
+        list.addListSelectionListener(this);
 
 
 
@@ -78,6 +86,17 @@ public class ProgramUI extends JFrame {
         buttonPanel.add(new JButton(new LoadAction()));
         controlPanel.add(buttonPanel, BorderLayout.CENTER);
 
+    }
+
+    @Override
+    public void valueChanged(ListSelectionEvent e) {
+        if (e.getValueIsAdjusting() == false) {
+            if (list.getSelectedIndex() == -1) {
+                select.setEnabled(false);
+            } else {
+                select.setEnabled(true);
+            }
+        }
     }
 
 
@@ -140,10 +159,11 @@ public class ProgramUI extends JFrame {
                 }
             }
         }
+
     }
 
-    // TODO: Finish This
-    private class ViewCourseListAction extends AbstractAction implements ListSelectionListener {
+    // TODO: Finish This, the set selected index needs help
+    private class ViewCourseListAction extends AbstractAction implements ActionListener {
 
         ViewCourseListAction() {
             super("View Course List");
@@ -163,17 +183,7 @@ public class ProgramUI extends JFrame {
                     listModel.add(i, program.getCourseLists().get(i));
                 }
             }
-            list = new JList<>(listModel);
-            list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-            list.setSelectedIndex(0);
-            list.setVisibleRowCount(5);
 
-            viewCourseListHelper();
-
-        }
-
-        private void viewCourseListHelper() {
-            list.addListSelectionListener(this);
             int index = list.getSelectedIndex();
             list.setSelectedIndex(index);
             list.ensureIndexIsVisible(index);
@@ -182,22 +192,21 @@ public class ProgramUI extends JFrame {
             select.setActionCommand("Select");
             select.addActionListener(new SelectCourseListAction(program.getCourseLists().get(index)));
 
+            viewCourseListHelper();
+
+        }
+
+        private void viewCourseListHelper() {
             JPanel buttonPane = new JPanel();
             buttonPane.setLayout(new BoxLayout(buttonPane,
                     BoxLayout.LINE_AXIS));
             buttonPane.add(select);
-            buttonPane.setBorder(BorderFactory.createEmptyBorder(5,5,5,5));
-
+            buttonPane.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
 
             viewCourses.add(list);
             viewCourses.add(buttonPane, BorderLayout.PAGE_END);
             viewCourses.setSize(250, 250);
             desktop.add(viewCourses);
-        }
-
-        @Override
-        public void valueChanged(ListSelectionEvent e) {
-
         }
     }
 
@@ -210,7 +219,7 @@ public class ProgramUI extends JFrame {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            desktop.add(new CourseListUI(courseList, ProgramUI.this));
+            desktop.add(new CourseListUI(courseList, desktop));
         }
     }
 

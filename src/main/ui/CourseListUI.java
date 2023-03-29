@@ -3,44 +3,56 @@ package ui;
 import model.Course;
 import model.CourseList;
 import model.Rubric;
+import model.University;
 
+import javax.lang.model.element.Element;
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.FileNotFoundException;
+import java.util.ArrayList;
 
 public class CourseListUI extends JInternalFrame {
     private static final int WIDTH = 500;
     private static final int HEIGHT = 300;
     private CourseList courseList;
     private JInternalFrame viewCourses;
+    private JInternalFrame viewUniversity;
+    private DefaultListModel universityModel;
+    private JList universityList;
+    private JButton selectUniversity;
+    private double grade;
+    private String universityName;
     private DefaultListModel listModel;
     private JList list;
     private JButton select;
     private Course course;
+    private JDesktopPane desktopPane;
 
-    public CourseListUI(CourseList c, Component parent) {
+    public CourseListUI(CourseList c, JDesktopPane desktop) {
         super(c.getName(), true, true, false,false);
         courseList = c;
         setLayout(new BorderLayout());
         setSize(WIDTH, HEIGHT);
         setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         setVisible(true);
+
         listModel = new DefaultListModel<>();
+
         JPanel buttonPanel = new JPanel();
-        buttonPanel.setLayout(new GridLayout(6,1));
+        buttonPanel.setLayout(new GridLayout(5,1));
         buttonPanel.add(new JButton(new CourseListUI.AddCourseAction(c)));
         buttonPanel.add(new JButton(new CourseListUI.RemoveCourseAction(c)));
         buttonPanel.add(new JButton(new CourseListUI.ShowGradeAction(c)));
         buttonPanel.add(new JButton(new CourseListUI.ViewCoursesAction(c)));
-//        buttonPanel.add(new JButton(new CourseListUI.DetermineCompetitiveAction(c)));
+        buttonPanel.add(new JButton(new CourseListUI.DetermineCompetitiveAction(c)));
         Container cp = getContentPane();
         cp.setLayout(new BorderLayout());
         cp.add(buttonPanel);
         setLocation(100, 100);
+        desktopPane = desktop;
     }
 
     private class AddCourseAction extends AbstractAction implements ActionListener {
@@ -113,7 +125,7 @@ public class CourseListUI extends JInternalFrame {
         public void actionPerformed(ActionEvent e) {
             viewCourses = new JInternalFrame("Courses", true, true, false,
                     false);
-            viewCourses.setLocation(650, 100);
+            viewCourses.setLocation(650, 400);
             viewCourses.setLayout(new BorderLayout());
             viewCourses.setVisible(true);
 
@@ -126,6 +138,8 @@ public class CourseListUI extends JInternalFrame {
             list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
             list.setSelectedIndex(0);
             list.setVisibleRowCount(5);
+            list.addListSelectionListener(this);
+
 
             viewCourseHelper();
         }
@@ -136,7 +150,6 @@ public class CourseListUI extends JInternalFrame {
         }
 
         private void viewCourseHelper() {
-            list.addListSelectionListener(this);
             int index = list.getSelectedIndex();
             list.setSelectedIndex(index);
             list.ensureIndexIsVisible(index);
@@ -155,7 +168,7 @@ public class CourseListUI extends JInternalFrame {
             viewCourses.add(list);
             viewCourses.add(buttonPane, BorderLayout.PAGE_END);
             viewCourses.setSize(250, 250);
-            add(viewCourses);
+            desktopPane.add(viewCourses);
         }
 
     }
@@ -169,14 +182,86 @@ public class CourseListUI extends JInternalFrame {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            desktop.add(new CourseUI(course, CourseListUI.this));
+            desktopPane.add(new CourseUI(course, desktopPane));
         }
     }
 
+    private class DetermineCompetitiveAction extends AbstractAction implements ActionListener, ListSelectionListener {
+
+        DetermineCompetitiveAction(CourseList c) {
+            super("Determine Competitive");
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            viewUniversity = new JInternalFrame("Universities", true, true, false,
+                    false);
+            viewUniversity.setLocation(650, 450);
+            viewUniversity.setLayout(new BorderLayout());
+            viewUniversity.setVisible(true);
+
+            universityModel = new DefaultListModel();
+            universityModel.addElement("University of Toronto");
+            universityModel.addElement("University of British Columbia");
+            universityModel.addElement("McGill University");
+            universityModel.addElement("McMaster University");
+            universityModel.addElement("University of Montreal");
+
+            universityList = new JList<>(universityModel);
+            universityList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+            universityList.setSelectedIndex(0);
+            universityList.setVisibleRowCount(5);
+            universityList.addListSelectionListener(this);
+
+            selectUniversityHelper(courseList);
+
+        }
+
+        private void selectUniversityHelper(CourseList courseList) {
+            int index = universityList.getSelectedIndex();
+            universityList.setSelectedIndex(index);
+            universityList.ensureIndexIsVisible(index);
+
+            selectUniversity = new JButton("Select");
+            selectUniversity.setActionCommand("Select");
+            selectUniversity.addActionListener(new SelectUniversityAction(
+                    courseList.calculateCourseListGrade(courseList), universityModel.get(index).toString()));
+
+            JPanel buttonPane = new JPanel();
+            buttonPane.setLayout(new BoxLayout(buttonPane,
+                    BoxLayout.LINE_AXIS));
+            buttonPane.add(select);
+            buttonPane.setBorder(BorderFactory.createEmptyBorder(5,5,5,5));
 
 
+            viewUniversity.add(universityList);
+            viewUniversity.add(buttonPane, BorderLayout.PAGE_END);
+            viewUniversity.setSize(250, 250);
+            desktopPane.add(viewUniversity);
+        }
+
+        private class SelectUniversityAction extends AbstractAction implements ActionListener {
+
+            SelectUniversityAction(double grades, String name) {
+                super("Select University List");
+                grade = grades;
+                universityName = name;
+            }
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                desktopPane.add(new UniversityUI(grade, universityName));
+            }
+        }
+
+        //University Info, change admission averages here to update application:
 
 
+        @Override
+        public void valueChanged(ListSelectionEvent e) {
+
+        }
+    }
 
     private String rubricHelper(String str) {
         String input = JOptionPane.showInputDialog(null, str + " Weight ?",
