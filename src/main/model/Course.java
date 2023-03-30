@@ -169,7 +169,7 @@ public class Course implements Writable {
     public JSONObject toJson() {
         JSONObject json = new JSONObject();
         json.put("name", name);
-        json.put("rubric", rubric);
+        json.put("rubric", rubricToJson());
         json.put("grade", grade);
         json.put("completed work", completedWorkToJson());
         return json;
@@ -184,6 +184,19 @@ public class Course implements Writable {
         }
 
         return jsonArray;
+    }
+
+    // EFFECTS: returns integers in rubric as JSON
+    private JSONObject rubricToJson() {
+        JSONObject jsonRubric = new JSONObject();
+        jsonRubric.put("quizzes", rubric.getQuizValue());
+        jsonRubric.put("assignments", rubric.getAssignmentValue());
+        jsonRubric.put("project", rubric.getProjectValue());
+        jsonRubric.put("midterm", rubric.getMidtermValue());
+        jsonRubric.put("participation", rubric.getParticipationValue());
+        jsonRubric.put("final exam", rubric.getFinalExamValue());
+        return jsonRubric;
+
     }
 
     @Override

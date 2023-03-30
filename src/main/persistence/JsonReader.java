@@ -77,17 +77,28 @@ public class JsonReader {
     // MODIFIES: wr
     // EFFECTS: parses course from JSON object and adds it to program
     private void addCourse(CourseList courseList, JSONObject jsonObject) {
-        Rubric initRubric = new Rubric(10,10,10,10,10,
-                50);
         String name = jsonObject.getString("name");
         JSONArray jsonArray = jsonObject.getJSONArray("completed work");
-        Course course = new Course(name, initRubric);
+        Course course = new Course(name, addRubric(jsonObject));
         for (Object json : jsonArray) {
             JSONObject nextWorkCompleted = (JSONObject) json;
             addWorkCompleted(course, nextWorkCompleted);
         }
         courseList.addCourse(course);
     }
+
+    private Rubric addRubric(JSONObject jsonObject) {
+        JSONObject rubricJ = jsonObject.getJSONObject("rubric");
+        int quizzes = rubricJ.getInt("quizzes");
+        int assignments = rubricJ.getInt("assignments");
+        int project = rubricJ.getInt("project");
+        int midterm = rubricJ.getInt("midterm");
+        int participation = rubricJ.getInt("participation");
+        int finalExam = rubricJ.getInt("final exam");
+        Rubric rubric = new Rubric(quizzes, assignments, project, midterm, participation, finalExam);
+        return rubric;
+    }
+
 
     // MODIFIES: course list
     // EFFECTS: parses work Completed from JSON object and adds it to program

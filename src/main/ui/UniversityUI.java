@@ -42,9 +42,11 @@ public class UniversityUI extends JInternalFrame implements ListSelectionListene
         setUniversityList(name);
         listModel = new DefaultListModel();
 
-        for (int i = 0; i < uniList.size(); i++) {
-            if (!listModel.contains(uniList.get(i).getProgram())) {
-                listModel.add(i, uniList.get(i).getProgram());
+        if (uniList.size() > 0) {
+            for (int i = 0; i < uniList.size(); i++) {
+                if (!listModel.contains(uniList.get(i).getProgram())) {
+                    listModel.add(i, uniList.get(i).getProgram());
+                }
             }
         }
         list = new JList<>(listModel);

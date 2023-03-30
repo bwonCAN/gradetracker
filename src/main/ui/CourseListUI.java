@@ -158,6 +158,7 @@ public class CourseListUI extends JInternalFrame implements ListSelectionListene
                     listModel.add(i, courseList.getCourses().get(i));
                 }
             }
+
             int index = list.getSelectedIndex();
             list.ensureIndexIsVisible(index);
 

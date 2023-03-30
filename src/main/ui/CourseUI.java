@@ -105,7 +105,7 @@ public class CourseUI extends JInternalFrame implements ListSelectionListener {
             String courseName = JOptionPane.showInputDialog(null, "Completed Work Name?",
                     "Enter Work Name To Remove", JOptionPane.QUESTION_MESSAGE);
             if (courseName != null) {
-                for (int i = 0; i < course.getCompletedWork().size(); i++) {
+                for (int i = 0; i <= course.getCompletedWork().size(); i++) {
                     if (course.getCompletedWork().get(i).getName().equals(courseName)) {
                         course.removeCompletedWork(course.getCompletedWork().get(i));
                     }
@@ -161,7 +161,7 @@ public class CourseUI extends JInternalFrame implements ListSelectionListener {
             viewWorks.setLayout(new BorderLayout());
             viewWorks.setVisible(true);
 
-            for (int i = 0; i < course.getCompletedWork().size(); i++) {
+            for (int i = 0; i <= course.getCompletedWork().size(); i++) {
                 if (!listModel.contains(course.getCompletedWork().get(i))) {
                     listModel.add(i, course.getCompletedWork().get(i));
                 }
