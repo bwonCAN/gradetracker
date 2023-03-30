@@ -12,7 +12,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class CourseUI extends JInternalFrame {
+public class CourseUI extends JInternalFrame implements ListSelectionListener {
     private static final int WIDTH = 500;
     private static final int HEIGHT = 300;
     private JInternalFrame viewWorks;
@@ -48,6 +48,28 @@ public class CourseUI extends JInternalFrame {
         cp.add(buttonPanel);
         setLocation(100, 100);
 
+        setupList();
+
+    }
+
+    private void setupList() {
+        list = new JList<>(listModel);
+        list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        list.setSelectedIndex(0);
+        list.setVisibleRowCount(5);
+        list.addListSelectionListener(this);
+    }
+
+    @Override
+    public void valueChanged(ListSelectionEvent e) {
+        if (e.getValueIsAdjusting() == false) {
+            if (list.getSelectedIndex() == -1) {
+                select.setEnabled(false);
+            } else {
+                select.setEnabled(true);
+                workCompleted = course.getCompletedWork().get(list.getSelectedIndex());
+            }
+        }
     }
 
     private class AddWorkAction extends AbstractAction implements ActionListener {
@@ -124,7 +146,7 @@ public class CourseUI extends JInternalFrame {
     }
 
 
-    private class ViewWorkDetailsAction extends AbstractAction implements ActionListener, ListSelectionListener {
+    private class ViewWorkDetailsAction extends AbstractAction implements ActionListener {
 
         ViewWorkDetailsAction(Course c) {
             super("View Courses");
@@ -144,20 +166,10 @@ public class CourseUI extends JInternalFrame {
                     listModel.add(i, course.getCompletedWork().get(i));
                 }
             }
-            list = new JList<>(listModel);
-            list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-            list.setSelectedIndex(0);
-            list.setVisibleRowCount(5);
-            list.addListSelectionListener(this);
-
 
             viewWorkHelper();
         }
 
-        @Override
-        public void valueChanged(ListSelectionEvent e) {
-
-        }
 
         private void viewWorkHelper() {
             int index = list.getSelectedIndex();

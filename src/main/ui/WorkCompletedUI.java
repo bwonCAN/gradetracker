@@ -31,7 +31,7 @@ public class WorkCompletedUI extends JInternalFrame {
         Container cp = getContentPane();
         cp.setLayout(new BorderLayout());
         cp.add(buttonPanel);
-        setLocation(100, 100);
+        setLocation(100, 300);
 
     }
 

@@ -14,7 +14,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
-public class CourseListUI extends JInternalFrame {
+public class CourseListUI extends JInternalFrame implements ListSelectionListener {
     private static final int WIDTH = 500;
     private static final int HEIGHT = 300;
     private CourseList courseList;
@@ -53,6 +53,28 @@ public class CourseListUI extends JInternalFrame {
         cp.add(buttonPanel);
         setLocation(100, 100);
         desktopPane = desktop;
+
+        setupList();
+    }
+
+    private void setupList() {
+        list = new JList<>(listModel);
+        list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        list.setSelectedIndex(0);
+        list.setVisibleRowCount(5);
+        list.addListSelectionListener(this);
+    }
+
+    @Override
+    public void valueChanged(ListSelectionEvent e) {
+        if (e.getValueIsAdjusting() == false) {
+            if (list.getSelectedIndex() == -1) {
+                select.setEnabled(false);
+            } else {
+                select.setEnabled(true);
+                course = courseList.getCourses().get(list.getSelectedIndex());
+            }
+        }
     }
 
     private class AddCourseAction extends AbstractAction implements ActionListener {
@@ -115,7 +137,7 @@ public class CourseListUI extends JInternalFrame {
         }
     }
 
-    private class ViewCoursesAction extends AbstractAction implements ActionListener, ListSelectionListener {
+    private class ViewCoursesAction extends AbstractAction implements ActionListener {
 
         ViewCoursesAction(CourseList c) {
             super("View Courses");
@@ -134,20 +156,10 @@ public class CourseListUI extends JInternalFrame {
                     listModel.add(i, courseList.getCourses().get(i));
                 }
             }
-            list = new JList<>(listModel);
-            list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-            list.setSelectedIndex(0);
-            list.setVisibleRowCount(5);
-            list.addListSelectionListener(this);
-
 
             viewCourseHelper();
         }
 
-        @Override
-        public void valueChanged(ListSelectionEvent e) {
-
-        }
 
         private void viewCourseHelper() {
             int index = list.getSelectedIndex();
@@ -190,6 +202,7 @@ public class CourseListUI extends JInternalFrame {
 
         DetermineCompetitiveAction(CourseList c) {
             super("Determine Competitive");
+            courseList = c;
         }
 
         @Override
@@ -250,7 +263,7 @@ public class CourseListUI extends JInternalFrame {
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                desktopPane.add(new UniversityUI(grade, universityName));
+                desktopPane.add(new UniversityUI(grade, universityName, desktopPane));
             }
         }
 

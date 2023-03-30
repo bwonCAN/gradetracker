@@ -70,9 +70,6 @@ public class ProgramUI extends JFrame implements ListSelectionListener {
         list.setSelectedIndex(0);
         list.setVisibleRowCount(5);
         list.addListSelectionListener(this);
-
-
-
     }
 
     // EFFECTS: adds button panel to main menu
@@ -95,6 +92,7 @@ public class ProgramUI extends JFrame implements ListSelectionListener {
                 select.setEnabled(false);
             } else {
                 select.setEnabled(true);
+                courseList = program.getCourseLists().get(list.getSelectedIndex());
             }
         }
     }
@@ -185,7 +183,6 @@ public class ProgramUI extends JFrame implements ListSelectionListener {
             }
 
             int index = list.getSelectedIndex();
-            list.setSelectedIndex(index);
             list.ensureIndexIsVisible(index);
 
             select = new JButton("Select");

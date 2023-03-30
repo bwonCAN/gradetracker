@@ -1,15 +1,121 @@
 package ui;
 
+import model.Course;
+import model.CourseList;
 import model.University;
 
 import javax.swing.*;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.List;
 
-public class UniversityUI extends JInternalFrame {
+public class UniversityUI extends JInternalFrame implements ListSelectionListener {
+    private double grade;
+    private static final int WIDTH = 500;
+    private static final int HEIGHT = 300;
+    private JInternalFrame viewPrograms;
+    private JButton selectProgram;
+    private String universityName;
+    private DefaultListModel listModel;
+    private JList list;
+    private JDesktopPane desktop;
+    private ArrayList<University> uniList;
+    private University selectedProgram;
+    private String program;
 
 
-    public UniversityUI(double grade, String name) {
-        super(name, true, true, false, false);
+    public UniversityUI(double grade1, String name, JDesktopPane desktopPane) {
+        super(name + " programs", true, true, false, false);
+        grade = grade1;
+        universityName = name;
+        desktop = desktopPane;
+
+        setLayout(new BorderLayout());
+        setSize(WIDTH, HEIGHT);
+        setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+        setVisible(true);
+
+        setUniversityList(name);
+        listModel = new DefaultListModel();
+
+        for (int i = 0; i < uniList.size(); i++) {
+            if (!listModel.contains(uniList.get(i).getProgram())) {
+                listModel.add(i, uniList.get(i).getProgram());
+            }
+        }
+        list = new JList<>(listModel);
+        list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        list.setSelectedIndex(0);
+        list.setVisibleRowCount(5);
+        list.addListSelectionListener(this);
+
+        selectProgramHelper();
+
+    }
+
+    private void selectProgramHelper() {
+        viewPrograms = new JInternalFrame("Programs", true, true, false, false);
+        int index = list.getSelectedIndex();
+        list.setSelectedIndex(index);
+        list.ensureIndexIsVisible(index);
+
+        selectProgram = new JButton("Select");
+        selectProgram.setActionCommand("Select");
+        selectProgram.addActionListener(new UniversityUI.SelectProgramAction(uniList.get(index).getProgram()));
+
+        JPanel buttonPane = new JPanel();
+        buttonPane.setLayout(new BoxLayout(buttonPane,
+                BoxLayout.LINE_AXIS));
+        buttonPane.add(selectProgram);
+        buttonPane.setBorder(BorderFactory.createEmptyBorder(5,5,5,5));
+
+
+        viewPrograms.add(list);
+        viewPrograms.add(buttonPane, BorderLayout.PAGE_END);
+        viewPrograms.setSize(250, 250);
+        desktop.add(viewPrograms);
+    }
+
+    private class SelectProgramAction extends AbstractAction implements ActionListener {
+
+        SelectProgramAction(String program) {
+            super("Competitive?");
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            JOptionPane.showMessageDialog(null, "Your current grade is " + grade
+                            + ", the admission average for this program is:" + selectedProgram.getAdmissionAverage()
+                            + "Therefore, you are "
+                            + determineCompetitive(grade, selectedProgram.getAdmissionAverage()) + " for this program",
+                    "Are you competitive?", JOptionPane.INFORMATION_MESSAGE);
+        }
+    }
+
+    private String determineCompetitive(double grade, int admissionAverage) {
+        if (grade >= admissionAverage) {
+            return "competitive";
+        } else {
+            return "not competitive";
+        }
+    }
+
+    private void setUniversityList(String name) {
+        if (name.contains("Toronto")) {
+            uniList = utPrograms();
+        } else if (name.contains("British")) {
+            uniList = ubcPrograms();
+        } else if (name.contains("McGill")) {
+            uniList = mcGillPrograms();
+        } else if (name.contains("McMaster")) {
+            uniList = mcMasterPrograms();
+        } else if (name.contains("Montreal")) {
+            uniList = montrealPrograms();
+        }
     }
 
     // EFFECTS: returns list of UT Programs
@@ -115,5 +221,17 @@ public class UniversityUI extends JInternalFrame {
         montreal.add(montrealKin);
 
         return montreal;
+    }
+
+    @Override
+    public void valueChanged(ListSelectionEvent e) {
+        if (e.getValueIsAdjusting() == false) {
+            if (list.getSelectedIndex() == -1) {
+                selectProgram.setEnabled(false);
+            } else {
+                selectProgram.setEnabled(true);
+                selectedProgram = uniList.get(list.getSelectedIndex());
+            }
+        }
     }
 }
