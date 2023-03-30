@@ -5,14 +5,12 @@ import model.CourseList;
 import model.Rubric;
 import model.University;
 
-import javax.lang.model.element.Element;
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
 
 public class CourseListUI extends JInternalFrame implements ListSelectionListener {
     private static final int WIDTH = 500;
@@ -33,6 +31,7 @@ public class CourseListUI extends JInternalFrame implements ListSelectionListene
 
     public CourseListUI(CourseList c, JDesktopPane desktop) {
         super(c.getName(), true, true, false,false);
+        c.addCourse(new Course("default", new Rubric(0,0,0,0,0,0)));
         courseList = c;
         setLayout(new BorderLayout());
         setSize(WIDTH, HEIGHT);
@@ -40,7 +39,21 @@ public class CourseListUI extends JInternalFrame implements ListSelectionListene
         setVisible(true);
 
         listModel = new DefaultListModel<>();
+        listModel.addElement(new Course("default", new Rubric(0,0,0,0,0,0)));
+        list = new JList<>(listModel);
+        list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        list.setSelectedIndex(0);
+        list.setVisibleRowCount(5);
+        list.addListSelectionListener(this);
 
+        desktopPane = desktop;
+
+        select = new JButton("Select");
+
+        addButtonPanel(c);
+    }
+
+    private void addButtonPanel(CourseList c) {
         JPanel buttonPanel = new JPanel();
         buttonPanel.setLayout(new GridLayout(5,1));
         buttonPanel.add(new JButton(new CourseListUI.AddCourseAction(c)));
@@ -51,18 +64,7 @@ public class CourseListUI extends JInternalFrame implements ListSelectionListene
         Container cp = getContentPane();
         cp.setLayout(new BorderLayout());
         cp.add(buttonPanel);
-        setLocation(100, 100);
-        desktopPane = desktop;
-
-        setupList();
-    }
-
-    private void setupList() {
-        list = new JList<>(listModel);
-        list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        list.setSelectedIndex(0);
-        list.setVisibleRowCount(5);
-        list.addListSelectionListener(this);
+        setLocation(500, 0);
     }
 
     @Override
@@ -147,7 +149,7 @@ public class CourseListUI extends JInternalFrame implements ListSelectionListene
         public void actionPerformed(ActionEvent e) {
             viewCourses = new JInternalFrame("Courses", true, true, false,
                     false);
-            viewCourses.setLocation(650, 400);
+            viewCourses.setLocation(0, 400);
             viewCourses.setLayout(new BorderLayout());
             viewCourses.setVisible(true);
 
@@ -156,20 +158,16 @@ public class CourseListUI extends JInternalFrame implements ListSelectionListene
                     listModel.add(i, courseList.getCourses().get(i));
                 }
             }
+            int index = list.getSelectedIndex();
+            list.ensureIndexIsVisible(index);
 
+            select.setActionCommand("Select");
+            select.addActionListener(new SelectCourseListAction(courseList.getCourses().get(index)));
             viewCourseHelper();
         }
 
 
         private void viewCourseHelper() {
-            int index = list.getSelectedIndex();
-            list.setSelectedIndex(index);
-            list.ensureIndexIsVisible(index);
-
-            select = new JButton("Select");
-            select.setActionCommand("Select");
-            select.addActionListener(new SelectCourseListAction(courseList.getCourses().get(index)));
-
             JPanel buttonPane = new JPanel();
             buttonPane.setLayout(new BoxLayout(buttonPane,
                     BoxLayout.LINE_AXIS));
@@ -243,7 +241,7 @@ public class CourseListUI extends JInternalFrame implements ListSelectionListene
             JPanel buttonPane = new JPanel();
             buttonPane.setLayout(new BoxLayout(buttonPane,
                     BoxLayout.LINE_AXIS));
-            buttonPane.add(select);
+            buttonPane.add(selectUniversity);
             buttonPane.setBorder(BorderFactory.createEmptyBorder(5,5,5,5));
 
 
@@ -272,7 +270,14 @@ public class CourseListUI extends JInternalFrame implements ListSelectionListene
 
         @Override
         public void valueChanged(ListSelectionEvent e) {
-
+            if (e.getValueIsAdjusting() == false) {
+                if (universityList.getSelectedIndex() == -1) {
+                    selectUniversity.setEnabled(false);
+                } else {
+                    selectUniversity.setEnabled(true);
+                    universityName = universityModel.get(universityList.getSelectedIndex()).toString();
+                }
+            }
         }
     }
 

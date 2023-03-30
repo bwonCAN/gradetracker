@@ -46,7 +46,7 @@ public class CourseUI extends JInternalFrame implements ListSelectionListener {
         Container cp = getContentPane();
         cp.setLayout(new BorderLayout());
         cp.add(buttonPanel);
-        setLocation(100, 100);
+        setLocation(500, 400);
 
         setupList();
 
@@ -149,7 +149,7 @@ public class CourseUI extends JInternalFrame implements ListSelectionListener {
     private class ViewWorkDetailsAction extends AbstractAction implements ActionListener {
 
         ViewWorkDetailsAction(Course c) {
-            super("View Courses");
+            super("View Completed Work");
             course = c;
         }
 

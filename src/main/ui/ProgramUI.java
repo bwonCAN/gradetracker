@@ -98,8 +98,7 @@ public class ProgramUI extends JFrame implements ListSelectionListener {
     }
 
 
-    private class AddCourseListAction extends AbstractAction implements ActionListener, DocumentListener,
-            ListSelectionListener {
+    private class AddCourseListAction extends AbstractAction implements ActionListener {
 
         AddCourseListAction() {
             super("Add Course List");
@@ -114,26 +113,6 @@ public class ProgramUI extends JFrame implements ListSelectionListener {
                 CourseList c = new CourseList(courseListName);
                 program.addCourseList(c);
             }
-        }
-
-        @Override
-        public void insertUpdate(DocumentEvent e) {
-
-        }
-
-        @Override
-        public void removeUpdate(DocumentEvent e) {
-
-        }
-
-        @Override
-        public void changedUpdate(DocumentEvent e) {
-
-        }
-
-        @Override
-        public void valueChanged(ListSelectionEvent e) {
-
         }
     }
 
@@ -160,7 +139,6 @@ public class ProgramUI extends JFrame implements ListSelectionListener {
 
     }
 
-    // TODO: Finish This, the set selected index needs help
     private class ViewCourseListAction extends AbstractAction implements ActionListener {
 
         ViewCourseListAction() {
@@ -172,7 +150,7 @@ public class ProgramUI extends JFrame implements ListSelectionListener {
         public void actionPerformed(ActionEvent evt) {
             viewCourses = new JInternalFrame("Course Lists", true, true, false,
                     false);
-            viewCourses.setLocation(650, 100);
+            viewCourses.setLocation(200, 0);
             viewCourses.setLayout(new BorderLayout());
             viewCourses.setVisible(true);
 
