@@ -25,7 +25,7 @@ public class UniversityUI extends JInternalFrame implements ListSelectionListene
     private JDesktopPane desktop;
     private ArrayList<University> uniList;
     private University selectedProgram;
-    private String program;
+    private University university;
 
 
     public UniversityUI(double grade1, String name, JDesktopPane desktopPane) {
@@ -33,6 +33,7 @@ public class UniversityUI extends JInternalFrame implements ListSelectionListene
         grade = grade1;
         universityName = name;
         desktop = desktopPane;
+        listModel = new DefaultListModel();
 
         setLayout(new BorderLayout());
         setSize(WIDTH, HEIGHT);
@@ -40,13 +41,11 @@ public class UniversityUI extends JInternalFrame implements ListSelectionListene
         setVisible(true);
 
         setUniversityList(name);
-        listModel = new DefaultListModel();
+        addButtonPanel(grade1);
 
-        if (uniList.size() > 0) {
-            for (int i = 0; i < uniList.size(); i++) {
-                if (!listModel.contains(uniList.get(i).getProgram())) {
-                    listModel.add(i, uniList.get(i).getProgram());
-                }
+        for (int i = 0; i < uniList.size(); i++) {
+            if (!listModel.contains(uniList.get(i).getProgram())) {
+                listModel.add(i, uniList.get(i).getProgram());
             }
         }
         list = new JList<>(listModel);
@@ -55,19 +54,32 @@ public class UniversityUI extends JInternalFrame implements ListSelectionListene
         list.setVisibleRowCount(5);
         list.addListSelectionListener(this);
 
-        selectProgramHelper();
+        selectProgramHelper(grade1);
 
     }
 
-    private void selectProgramHelper() {
+    private void addButtonPanel(double grade) {
+        JPanel buttonPanel = new JPanel();
+        buttonPanel.setLayout(new GridLayout(5,1));
+        buttonPanel.add(new JButton(new UniversityUI.SelectProgramAction(grade, uniList.get(0))));
+        buttonPanel.add(new JButton(new UniversityUI.SelectProgramAction(grade, uniList.get(1))));
+        buttonPanel.add(new JButton(new UniversityUI.SelectProgramAction(grade, uniList.get(2))));
+        buttonPanel.add(new JButton(new UniversityUI.SelectProgramAction(grade, uniList.get(3))));
+        buttonPanel.add(new JButton(new UniversityUI.SelectProgramAction(grade, uniList.get(4))));
+        Container cp = getContentPane();
+        cp.setLayout(new BorderLayout());
+        cp.add(buttonPanel);
+        setLocation(500, 500);
+    }
+
+    private void selectProgramHelper(double grade1) {
         viewPrograms = new JInternalFrame("Programs", true, true, false, false);
         int index = list.getSelectedIndex();
-        list.setSelectedIndex(index);
         list.ensureIndexIsVisible(index);
 
         selectProgram = new JButton("Select");
         selectProgram.setActionCommand("Select");
-        selectProgram.addActionListener(new UniversityUI.SelectProgramAction(uniList.get(index).getProgram()));
+        selectProgram.addActionListener(new UniversityUI.SelectProgramAction(grade1, uniList.get(index)));
 
         JPanel buttonPane = new JPanel();
         buttonPane.setLayout(new BoxLayout(buttonPane,
@@ -84,16 +96,17 @@ public class UniversityUI extends JInternalFrame implements ListSelectionListene
 
     private class SelectProgramAction extends AbstractAction implements ActionListener {
 
-        SelectProgramAction(String program) {
-            super("Competitive?");
+        SelectProgramAction(double grade, University university1) {
+            super(university1.getProgram());
+            university = university1;
         }
 
         @Override
         public void actionPerformed(ActionEvent e) {
             JOptionPane.showMessageDialog(null, "Your current grade is " + grade
-                            + ", the admission average for this program is:" + selectedProgram.getAdmissionAverage()
-                            + "Therefore, you are "
-                            + determineCompetitive(grade, selectedProgram.getAdmissionAverage()) + " for this program",
+                            + ", the admission average for this program is: " + university.getAdmissionAverage()
+                            + ". Therefore, you are "
+                            + determineCompetitive(grade, university.getAdmissionAverage()) + " for this program.",
                     "Are you competitive?", JOptionPane.INFORMATION_MESSAGE);
         }
     }
@@ -143,7 +156,7 @@ public class UniversityUI extends JInternalFrame implements ListSelectionListene
     // EFFECTS: returns list of UBC Programs
     public ArrayList<University> ubcPrograms() {
         University ubcScience = new University("University of British Columbia", "Science",
-                100);
+                94);
         University ubcBusiness = new University("University of British Columbia", "Business",
                 100);
         University ubcArts = new University("University of British Columbia", "Arts", 100);
@@ -232,7 +245,7 @@ public class UniversityUI extends JInternalFrame implements ListSelectionListene
                 selectProgram.setEnabled(false);
             } else {
                 selectProgram.setEnabled(true);
-                selectedProgram = uniList.get(list.getSelectedIndex());
+                university = uniList.get(list.getSelectedIndex());
             }
         }
     }
