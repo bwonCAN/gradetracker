@@ -13,19 +13,20 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 
-public class UniversityUI extends JInternalFrame implements ListSelectionListener {
+public class UniversityUI extends JInternalFrame {
     private double grade;
     private static final int WIDTH = 500;
     private static final int HEIGHT = 300;
-    private JInternalFrame viewPrograms;
-    private JButton selectProgram;
-    private String universityName;
-    private DefaultListModel listModel;
-    private JList list;
     private JDesktopPane desktop;
     private ArrayList<University> uniList;
-    private University selectedProgram;
     private University university;
+    private String universityName;
+    private University science;
+    private University business;
+    private University arts;
+    private University kin;
+    private University engineering;
+
 
 
     public UniversityUI(double grade1, String name, JDesktopPane desktopPane) {
@@ -33,80 +34,113 @@ public class UniversityUI extends JInternalFrame implements ListSelectionListene
         grade = grade1;
         universityName = name;
         desktop = desktopPane;
-        listModel = new DefaultListModel();
-
         setLayout(new BorderLayout());
         setSize(WIDTH, HEIGHT);
         setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         setVisible(true);
 
         setUniversityList(name);
+        science = uniList.get(0);
+        business = uniList.get(1);
+        arts = uniList.get(2);
+        engineering = uniList.get(3);
+        kin = uniList.get(4);
+
         addButtonPanel(grade1);
-
-        for (int i = 0; i < uniList.size(); i++) {
-            if (!listModel.contains(uniList.get(i).getProgram())) {
-                listModel.add(i, uniList.get(i).getProgram());
-            }
-        }
-        list = new JList<>(listModel);
-        list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        list.setSelectedIndex(0);
-        list.setVisibleRowCount(5);
-        list.addListSelectionListener(this);
-
-        selectProgramHelper(grade1);
 
     }
 
     private void addButtonPanel(double grade) {
         JPanel buttonPanel = new JPanel();
         buttonPanel.setLayout(new GridLayout(5,1));
-        buttonPanel.add(new JButton(new UniversityUI.SelectProgramAction(grade, uniList.get(0))));
-        buttonPanel.add(new JButton(new UniversityUI.SelectProgramAction(grade, uniList.get(1))));
-        buttonPanel.add(new JButton(new UniversityUI.SelectProgramAction(grade, uniList.get(2))));
-        buttonPanel.add(new JButton(new UniversityUI.SelectProgramAction(grade, uniList.get(3))));
-        buttonPanel.add(new JButton(new UniversityUI.SelectProgramAction(grade, uniList.get(4))));
+        buttonPanel.add(new JButton(new UniversityUI.SelectScienceAction(science)));
+        buttonPanel.add(new JButton(new UniversityUI.SelectBusinessAction(business)));
+        buttonPanel.add(new JButton(new UniversityUI.SelectArtsAction(arts)));
+        buttonPanel.add(new JButton(new UniversityUI.SelectEngineeringAction(engineering)));
+        buttonPanel.add(new JButton(new UniversityUI.SelectKinesiologyAction(kin)));
         Container cp = getContentPane();
         cp.setLayout(new BorderLayout());
         cp.add(buttonPanel);
         setLocation(500, 500);
     }
 
-    private void selectProgramHelper(double grade1) {
-        viewPrograms = new JInternalFrame("Programs", true, true, false, false);
-        int index = list.getSelectedIndex();
-        list.ensureIndexIsVisible(index);
 
-        selectProgram = new JButton("Select");
-        selectProgram.setActionCommand("Select");
-        selectProgram.addActionListener(new UniversityUI.SelectProgramAction(grade1, uniList.get(index)));
+    private class SelectScienceAction extends AbstractAction implements ActionListener {
 
-        JPanel buttonPane = new JPanel();
-        buttonPane.setLayout(new BoxLayout(buttonPane,
-                BoxLayout.LINE_AXIS));
-        buttonPane.add(selectProgram);
-        buttonPane.setBorder(BorderFactory.createEmptyBorder(5,5,5,5));
-
-
-        viewPrograms.add(list);
-        viewPrograms.add(buttonPane, BorderLayout.PAGE_END);
-        viewPrograms.setSize(250, 250);
-        desktop.add(viewPrograms);
-    }
-
-    private class SelectProgramAction extends AbstractAction implements ActionListener {
-
-        SelectProgramAction(double grade, University university1) {
+        SelectScienceAction(University university1) {
             super(university1.getProgram());
-            university = university1;
         }
 
         @Override
         public void actionPerformed(ActionEvent e) {
             JOptionPane.showMessageDialog(null, "Your current grade is " + grade
-                            + ", the admission average for this program is: " + university.getAdmissionAverage()
+                            + ", the admission average for this program is: " + science.getAdmissionAverage()
                             + ". Therefore, you are "
-                            + determineCompetitive(grade, university.getAdmissionAverage()) + " for this program.",
+                            + determineCompetitive(grade, science.getAdmissionAverage()) + " for this program.",
+                    "Are you competitive?", JOptionPane.INFORMATION_MESSAGE);
+        }
+    }
+
+    private class SelectBusinessAction extends AbstractAction implements ActionListener {
+
+        SelectBusinessAction(University university1) {
+            super(university1.getProgram());
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            JOptionPane.showMessageDialog(null, "Your current grade is " + grade
+                            + ", the admission average for this program is: " + business.getAdmissionAverage()
+                            + ". Therefore, you are "
+                            + determineCompetitive(grade, business.getAdmissionAverage()) + " for this program.",
+                    "Are you competitive?", JOptionPane.INFORMATION_MESSAGE);
+        }
+    }
+
+    private class SelectArtsAction extends AbstractAction implements ActionListener {
+
+        SelectArtsAction(University university1) {
+            super(university1.getProgram());
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            JOptionPane.showMessageDialog(null, "Your current grade is " + grade
+                            + ", the admission average for this program is: " + arts.getAdmissionAverage()
+                            + ". Therefore, you are "
+                            + determineCompetitive(grade, arts.getAdmissionAverage()) + " for this program.",
+                    "Are you competitive?", JOptionPane.INFORMATION_MESSAGE);
+        }
+    }
+
+    private class SelectEngineeringAction extends AbstractAction implements ActionListener {
+
+        SelectEngineeringAction(University university1) {
+            super(university1.getProgram());
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            JOptionPane.showMessageDialog(null, "Your current grade is " + grade
+                            + ", the admission average for this program is: " + engineering.getAdmissionAverage()
+                            + ". Therefore, you are "
+                            + determineCompetitive(grade, engineering.getAdmissionAverage()) + " for this program.",
+                    "Are you competitive?", JOptionPane.INFORMATION_MESSAGE);
+        }
+    }
+
+    private class SelectKinesiologyAction extends AbstractAction implements ActionListener {
+
+        SelectKinesiologyAction(University university1) {
+            super(university1.getProgram());
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            JOptionPane.showMessageDialog(null, "Your current grade is " + grade
+                            + ", the admission average for this program is: " + kin.getAdmissionAverage()
+                            + ". Therefore, you are "
+                            + determineCompetitive(grade, kin.getAdmissionAverage()) + " for this program.",
                     "Are you competitive?", JOptionPane.INFORMATION_MESSAGE);
         }
     }
@@ -238,15 +272,4 @@ public class UniversityUI extends JInternalFrame implements ListSelectionListene
         return montreal;
     }
 
-    @Override
-    public void valueChanged(ListSelectionEvent e) {
-        if (e.getValueIsAdjusting() == false) {
-            if (list.getSelectedIndex() == -1) {
-                selectProgram.setEnabled(false);
-            } else {
-                selectProgram.setEnabled(true);
-                university = uniList.get(list.getSelectedIndex());
-            }
-        }
-    }
 }
