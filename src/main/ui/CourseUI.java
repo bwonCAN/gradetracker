@@ -161,7 +161,7 @@ public class CourseUI extends JInternalFrame implements ListSelectionListener {
             viewWorks.setLayout(new BorderLayout());
             viewWorks.setVisible(true);
 
-            for (int i = 0; i <= course.getCompletedWork().size(); i++) {
+            for (int i = 0; i < course.getCompletedWork().size(); i++) {
                 if (!listModel.contains(course.getCompletedWork().get(i))) {
                     listModel.add(i, course.getCompletedWork().get(i));
                 }

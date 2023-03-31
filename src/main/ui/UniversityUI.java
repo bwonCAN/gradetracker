@@ -1,25 +1,19 @@
 package ui;
 
-import model.Course;
-import model.CourseList;
 import model.University;
 
 import javax.swing.*;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-import java.util.List;
+
 
 public class UniversityUI extends JInternalFrame {
     private double grade;
     private static final int WIDTH = 500;
     private static final int HEIGHT = 300;
-    private JDesktopPane desktop;
     private ArrayList<University> uniList;
-    private University university;
     private String universityName;
     private University science;
     private University business;
@@ -33,7 +27,6 @@ public class UniversityUI extends JInternalFrame {
         super(name + " programs", true, true, false, false);
         grade = grade1;
         universityName = name;
-        desktop = desktopPane;
         setLayout(new BorderLayout());
         setSize(WIDTH, HEIGHT);
         setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);

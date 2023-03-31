@@ -6,8 +6,8 @@ import persistence.JsonReader;
 import persistence.JsonWriter;
 
 import javax.swing.*;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
+import java.awt.image.BufferedImage;
+import javax.imageio.ImageIO;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import java.awt.*;
@@ -15,6 +15,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Objects;
@@ -63,6 +64,12 @@ public class ProgramUI extends JFrame implements ListSelectionListener {
         centreOnScreen();
         setVisible(true);
 
+        listHelper();
+
+
+    }
+
+    private void listHelper() {
         listModel = new DefaultListModel<>();
         listModel.addElement(new CourseList("default"));
         list = new JList<>(listModel);
@@ -207,6 +214,22 @@ public class ProgramUI extends JFrame implements ListSelectionListener {
         @Override
         public void actionPerformed(ActionEvent evt) {
             saveProgram();
+            JInternalFrame photoFrame = new JInternalFrame("Saved", false, true, false,
+                    false);
+            photoFrame.setLocation(500, 400);
+            photoFrame.setSize(400, 250);
+            photoFrame.setLayout(new BorderLayout());
+            photoFrame.setVisible(true);
+
+            try {
+                BufferedImage photo = ImageIO.read(new File(
+                        "/Users/BrianWongers/Desktop/CPSC 210/project_v4l2b/src/main/ui/completed.jpeg"));
+                JLabel picLabel = new JLabel(new ImageIcon(photo));
+                photoFrame.add(picLabel);
+                desktop.add(photoFrame);
+            } catch (IOException e) {
+                //catch exception
+            }
         }
     }
 
@@ -218,7 +241,24 @@ public class ProgramUI extends JFrame implements ListSelectionListener {
 
         @Override
         public void actionPerformed(ActionEvent evt) {
+            JInternalFrame photoFrame = new JInternalFrame("Loaded", false, true, false,
+                    false);
+            photoFrame.setLocation(500, 400);
+            photoFrame.setSize(400, 250);
+            photoFrame.setLayout(new BorderLayout());
+            photoFrame.setVisible(true);
+
+            try {
+                BufferedImage photo = ImageIO.read(new File(
+                        "/Users/BrianWongers/Desktop/CPSC 210/project_v4l2b/src/main/ui/completed.jpeg"));
+                JLabel picLabel = new JLabel(new ImageIcon(photo));
+                photoFrame.add(picLabel);
+                desktop.add(photoFrame);
+            } catch (IOException e) {
+                //catch exception
+            }
             loadProgram();
+
         }
     }
 
