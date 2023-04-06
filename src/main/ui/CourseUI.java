@@ -19,6 +19,8 @@ public class CourseUI extends JInternalFrame implements ListSelectionListener {
     private WorkCompleted workCompleted;
     private JInternalFrame viewWorkCompleted;
     private DefaultListModel listModel;
+    private DefaultListModel completedWorkModel;
+    private JList completedWorkList;
     private JList list;
     private JButton select;
     private JDesktopPane desktop;
@@ -35,6 +37,7 @@ public class CourseUI extends JInternalFrame implements ListSelectionListener {
         setVisible(true);
 
         listModel = new DefaultListModel<>();
+        completedWorkModel = new DefaultListModel<>();
 
         JPanel buttonPanel = new JPanel();
         buttonPanel.setLayout(new GridLayout(5,1));
@@ -129,7 +132,7 @@ public class CourseUI extends JInternalFrame implements ListSelectionListener {
         }
     }
 
-    // TODO: this may not work, test
+
     private class ShowWorkAction extends AbstractAction implements ActionListener {
 
         ShowWorkAction(Course c) {
@@ -146,7 +149,7 @@ public class CourseUI extends JInternalFrame implements ListSelectionListener {
     }
 
 
-    private class ViewWorkDetailsAction extends AbstractAction implements ActionListener {
+    private class ViewWorkDetailsAction extends AbstractAction implements ActionListener, ListSelectionListener {
 
         ViewWorkDetailsAction(Course c) {
             super("View Completed Work");
@@ -162,20 +165,20 @@ public class CourseUI extends JInternalFrame implements ListSelectionListener {
             viewWorks.setVisible(true);
 
             for (int i = 0; i < course.getCompletedWork().size(); i++) {
-                if (!listModel.contains(course.getCompletedWork().get(i))) {
-                    listModel.add(i, course.getCompletedWork().get(i));
+                if (!completedWorkModel.contains(course.getCompletedWork().get(i))) {
+                    completedWorkModel.add(i, course.getCompletedWork().get(i));
                 }
             }
-
+            completedWorkList = new JList<>(completedWorkModel);
+            completedWorkList.setSelectedIndex(0);
             viewWorkHelper();
         }
 
 
         private void viewWorkHelper() {
-            int index = list.getSelectedIndex();
-            list.setSelectedIndex(index);
-            list.ensureIndexIsVisible(index);
-
+            int index = completedWorkList.getSelectedIndex();
+            completedWorkList.ensureIndexIsVisible(index);
+            workCompleted = course.getCompletedWork().get(index);
             select = new JButton("Select");
             select.setActionCommand("Select");
             select.addActionListener(new CourseUI.SelectWorkAction(course.getCompletedWork().get(index)));
@@ -187,25 +190,36 @@ public class CourseUI extends JInternalFrame implements ListSelectionListener {
             buttonPane.setBorder(BorderFactory.createEmptyBorder(5,5,5,5));
 
 
-            viewWorks.add(list);
+            viewWorks.add(completedWorkList);
             viewWorks.add(buttonPane, BorderLayout.PAGE_END);
             viewWorks.setSize(250, 250);
             desktop.add(viewWorks);
         }
 
+        @Override
+        public void valueChanged(ListSelectionEvent e) {
+            if (e.getValueIsAdjusting() == false) {
+                if (completedWorkList.getSelectedIndex() == -1) {
+                    select.setEnabled(false);
+                } else {
+                    select.setEnabled(true);
+                    workCompleted = course.getCompletedWork().get(completedWorkList.getSelectedIndex());
+                }
+            }
+        }
     }
 
     private class SelectWorkAction extends AbstractAction implements ActionListener {
 
         SelectWorkAction(WorkCompleted workCompleted1) {
             super("Select Course List");
-            workCompleted = workCompleted1;
         }
 
         @Override
         public void actionPerformed(ActionEvent e) {
             desktop.add(new WorkCompletedUI(workCompleted, desktop));
         }
+
     }
 
 }

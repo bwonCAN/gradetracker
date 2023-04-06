@@ -223,7 +223,7 @@ public class ProgramUI extends JFrame implements ListSelectionListener {
 
             try {
                 BufferedImage photo = ImageIO.read(new File(
-                        "/Users/BrianWongers/Desktop/CPSC 210/project_v4l2b/src/main/ui/completed.jpeg"));
+                        "./data/completed.jpeg"));
                 JLabel picLabel = new JLabel(new ImageIcon(photo));
                 photoFrame.add(picLabel);
                 desktop.add(photoFrame);
@@ -250,7 +250,7 @@ public class ProgramUI extends JFrame implements ListSelectionListener {
 
             try {
                 BufferedImage photo = ImageIO.read(new File(
-                        "/Users/BrianWongers/Desktop/CPSC 210/project_v4l2b/src/main/ui/completed.jpeg"));
+                        "./data/completed.jpeg"));
                 JLabel picLabel = new JLabel(new ImageIcon(photo));
                 photoFrame.add(picLabel);
                 desktop.add(photoFrame);
