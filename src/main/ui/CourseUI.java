@@ -12,14 +12,12 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class CourseUI extends JInternalFrame implements ListSelectionListener {
+public class CourseUI extends JInternalFrame {
     private static final int WIDTH = 500;
     private static final int HEIGHT = 300;
     private JInternalFrame viewWorks;
     private WorkCompleted workCompleted;
-    private DefaultListModel listModel;
     private DefaultListModel completedWorkModel;
-    private JList completedWorkList;
     private JList list;
     private JButton select;
     private JDesktopPane desktop;
@@ -35,7 +33,6 @@ public class CourseUI extends JInternalFrame implements ListSelectionListener {
         setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         setVisible(true);
 
-        listModel = new DefaultListModel<>();
         completedWorkModel = new DefaultListModel<>();
 
         JPanel buttonPanel = new JPanel();
@@ -50,29 +47,8 @@ public class CourseUI extends JInternalFrame implements ListSelectionListener {
         cp.add(buttonPanel);
         setLocation(500, 400);
 
-        setupList();
-
     }
 
-    private void setupList() {
-        list = new JList<>(listModel);
-        list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        list.setSelectedIndex(0);
-        list.setVisibleRowCount(5);
-        list.addListSelectionListener(this);
-    }
-
-    @Override
-    public void valueChanged(ListSelectionEvent e) {
-        if (e.getValueIsAdjusting() == false) {
-            if (list.getSelectedIndex() == -1) {
-                select.setEnabled(false);
-            } else {
-                select.setEnabled(true);
-                workCompleted = course.getCompletedWork().get(list.getSelectedIndex());
-            }
-        }
-    }
 
     private class AddWorkAction extends AbstractAction implements ActionListener {
 
@@ -168,15 +144,18 @@ public class CourseUI extends JInternalFrame implements ListSelectionListener {
                     completedWorkModel.add(i, course.getCompletedWork().get(i));
                 }
             }
-            completedWorkList = new JList<>(completedWorkModel);
-            completedWorkList.setSelectedIndex(0);
+            list = new JList<>(completedWorkModel);
+            list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+            list.setSelectedIndex(0);
+            list.setVisibleRowCount(8);
+            list.addListSelectionListener(this);
             viewWorkHelper();
         }
 
 
         private void viewWorkHelper() {
-            int index = completedWorkList.getSelectedIndex();
-            completedWorkList.ensureIndexIsVisible(index);
+            int index = list.getSelectedIndex();
+            list.ensureIndexIsVisible(index);
             workCompleted = course.getCompletedWork().get(index);
             select = new JButton("Select");
             select.setActionCommand("Select");
@@ -189,7 +168,7 @@ public class CourseUI extends JInternalFrame implements ListSelectionListener {
             buttonPane.setBorder(BorderFactory.createEmptyBorder(5,5,5,5));
 
 
-            viewWorks.add(completedWorkList);
+            viewWorks.add(list);
             viewWorks.add(buttonPane, BorderLayout.PAGE_END);
             viewWorks.setSize(250, 250);
             desktop.add(viewWorks);
@@ -198,11 +177,11 @@ public class CourseUI extends JInternalFrame implements ListSelectionListener {
         @Override
         public void valueChanged(ListSelectionEvent e) {
             if (e.getValueIsAdjusting() == false) {
-                if (completedWorkList.getSelectedIndex() == -1) {
+                if (list.getSelectedIndex() == -1) {
                     select.setEnabled(false);
                 } else {
                     select.setEnabled(true);
-                    workCompleted = course.getCompletedWork().get(completedWorkList.getSelectedIndex());
+                    workCompleted = course.getCompletedWork().get(list.getSelectedIndex());
                 }
             }
         }
@@ -212,7 +191,9 @@ public class CourseUI extends JInternalFrame implements ListSelectionListener {
 
         SelectWorkAction(WorkCompleted workCompleted1) {
             super("Select Course List");
+            workCompleted = workCompleted1;
         }
+
 
         @Override
         public void actionPerformed(ActionEvent e) {
