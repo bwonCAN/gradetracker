@@ -36,12 +36,15 @@ public class CourseList implements Writable {
     // EFFECTS: adds new course to the course list
     public void addCourse(Course course) {
         this.courses.add(course);
+        EventLog.getInstance().logEvent(new Event(course.getName() + " added."));
+
     }
 
     // MODIFIES: this
     // EFFECTS: removes specified course in the course list
     public void removeCourse(Course course) {
         this.courses.remove(course);
+        EventLog.getInstance().logEvent(new Event(course.getName() + " removed."));
     }
 
     // MODIFIES: this

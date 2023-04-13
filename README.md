@@ -49,11 +49,20 @@ chosen university based on the latest information (currently 2022).
 # Instructions for Grader
 
 - You can generate the first required action related to adding Xs to a Y by clicking add button and entering name of a course list.
-- You can generate the second required action related to adding Xs to a Y by adding assignments to a course and calculating the overall grade of the course
+- You can generate the second required action related to adding Xs to a Y by click the remove button and entering the name of a course list. 
 - You can locate my visual component by clicking the save or load button.
 - You can save the state of my application by clicking the save button in the upper left corner.
 - You can reload the state of my application by clicking on the load button in the upper left corner.
+- Please run ProgramUI for the GUI
 
+#
+
+## Phase 4: Task 2
+    Wed Apr 12 21:50:35 PDT 2023
+    fall course list added.
+
+    Wed Apr 12 21:50:37 PDT 2023
+    fall course list removed.
 #
 #### *Citations*
 - JSON Serialization Demo code referenced, link to source: https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo

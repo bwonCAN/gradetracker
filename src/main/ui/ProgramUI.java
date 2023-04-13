@@ -2,25 +2,23 @@
 package ui;
 
 import model.*;
+import model.Event;
 import persistence.JsonReader;
 import persistence.JsonWriter;
 
 import javax.swing.*;
+import java.awt.event.*;
 import java.awt.image.BufferedImage;
 import javax.imageio.ImageIO;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Objects;
 
-public class ProgramUI extends JFrame implements ListSelectionListener {
+public class ProgramUI extends JFrame implements ListSelectionListener, WindowListener {
     private static final int WIDTH = 1000;
     private static final int HEIGHT = 800;
     private Program program;
@@ -60,7 +58,8 @@ public class ProgramUI extends JFrame implements ListSelectionListener {
         controlPanel.setVisible(true);
         desktop.add(controlPanel);
 
-        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
+        addWindowListener(this);
         centreOnScreen();
         setVisible(true);
 
@@ -102,6 +101,47 @@ public class ProgramUI extends JFrame implements ListSelectionListener {
                 courseList = program.getCourseLists().get(list.getSelectedIndex());
             }
         }
+    }
+
+    @Override
+    public void windowOpened(WindowEvent e) {
+
+    }
+
+    @Override
+    public void windowClosing(WindowEvent e) {
+        printLog(EventLog.getInstance());
+        System.exit(0);
+    }
+
+    private void printLog(EventLog el) {
+        for (Event next : el) {
+            System.out.print(next.toString() + "\n\n");
+        }
+    }
+
+    @Override
+    public void windowClosed(WindowEvent e) {
+    }
+
+    @Override
+    public void windowIconified(WindowEvent e) {
+
+    }
+
+    @Override
+    public void windowDeiconified(WindowEvent e) {
+
+    }
+
+    @Override
+    public void windowActivated(WindowEvent e) {
+
+    }
+
+    @Override
+    public void windowDeactivated(WindowEvent e) {
+
     }
 
 

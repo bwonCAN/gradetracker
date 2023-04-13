@@ -24,12 +24,14 @@ public class Program implements Writable {
     // EFFECTS: adds new course list
     public void addCourseList(CourseList courselist) {
         courseLists.add(courselist);
+        EventLog.getInstance().logEvent(new Event(courselist.getName() + " course list added."));
     }
 
     // MODIFIES: this
     // EFFECTS: adds new course list
     public void removeCourseList(CourseList courselist) {
         courseLists.remove(courselist);
+        EventLog.getInstance().logEvent(new Event(courselist.getName() + " course list removed."));
     }
 
     // EFFECTS: converts Program to JSON
