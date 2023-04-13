@@ -17,7 +17,6 @@ public class CourseUI extends JInternalFrame implements ListSelectionListener {
     private static final int HEIGHT = 300;
     private JInternalFrame viewWorks;
     private WorkCompleted workCompleted;
-    private JInternalFrame viewWorkCompleted;
     private DefaultListModel listModel;
     private DefaultListModel completedWorkModel;
     private JList completedWorkList;

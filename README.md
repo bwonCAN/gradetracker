@@ -64,5 +64,13 @@ chosen university based on the latest information (currently 2022).
     Wed Apr 12 21:50:37 PDT 2023
     fall course list removed.
 #
+
+## Phase 4: Task 3
+Looking at the UML diagram, I believe that I could refactor the application and remove the Program class entirely.
+The Program class is there for initialization and to allow for 0 instances of CourseList. However, with a slight change
+in the initialization (eg: having a default course list to begin with), it would be possible to remove the Program class
+and consequently, the ProgramUI class while maintaining the same functionality. The responsibilities of the ProgramUI class
+would be simply shifted into the CourseList UI class.
+#
 #### *Citations*
 - JSON Serialization Demo code referenced, link to source: https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo
