@@ -1,4 +1,4 @@
-# **University Progress Tracker**
+# **Grade Tracker: Determine Competitiveness for Canadian Universities **
 
 ## *Background:*
 This application is built for Canadian high school students looking to get into a
