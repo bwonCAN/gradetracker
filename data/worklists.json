@@ -1,0 +1,66 @@
+{"course lists": [
+    {
+        "courses": [],
+        "name": "default"
+    },
+    {
+        "courses": [
+            {
+                "grade": 0,
+                "name": "cpsc 210",
+                "completed work": [
+                    {
+                        "grade": 100,
+                        "name": "quiz 1"
+                    },
+                    {
+                        "grade": 100,
+                        "name": "assignment 1"
+                    },
+                    {
+                        "grade": 100,
+                        "name": "project 1 "
+                    },
+                    {
+                        "grade": 100,
+                        "name": "midterm 1"
+                    },
+                    {
+                        "grade": 100,
+                        "name": "participation 1"
+                    },
+                    {
+                        "grade": 50,
+                        "name": "final exam"
+                    }
+                ],
+                "rubric": {
+                    "participation": 10,
+                    "assignments": 10,
+                    "project": 10,
+                    "final exam": 50,
+                    "quizzes": 10,
+                    "midterm": 10
+                }
+            },
+            {
+                "grade": 0,
+                "name": "default",
+                "completed work": [],
+                "rubric": {
+                    "participation": 0,
+                    "assignments": 0,
+                    "project": 0,
+                    "final exam": 0,
+                    "quizzes": 0,
+                    "midterm": 0
+                }
+            }
+        ],
+        "name": "fall 2022"
+    },
+    {
+        "courses": [],
+        "name": "test"
+    }
+]}

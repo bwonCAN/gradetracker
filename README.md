@@ -44,33 +44,7 @@ chosen university based on the latest information (currently 2022).
 - As a user, I want to be able to save my current list of information if I so choose (worklists, completed work, grades, etc)
 - As a user, I want to be able to load a previous list of information if I so choose.
 
-#
 
-# Instructions for Grader
-
-- You can generate the first required action related to adding Xs to a Y by clicking add button and entering name of a course list.
-- You can generate the second required action related to adding Xs to a Y by click the remove button and entering the name of a course list. 
-- You can locate my visual component by clicking the save or load button.
-- You can save the state of my application by clicking the save button in the upper left corner.
-- You can reload the state of my application by clicking on the load button in the upper left corner.
-- Please run ProgramUI for the GUI
-
-#
-
-## Phase 4: Task 2
-    Wed Apr 12 21:50:35 PDT 2023
-    fall course list added.
-
-    Wed Apr 12 21:50:37 PDT 2023
-    fall course list removed.
-#
-
-## Phase 4: Task 3
-Looking at the UML diagram, I believe that I could refactor the application and remove the Program class entirely.
-The Program class is there for initialization and to allow for 0 instances of CourseList. However, with a slight change
-in the initialization (eg: having a default course list to begin with), it would be possible to remove the Program class
-and consequently, the ProgramUI class while maintaining the same functionality. The responsibilities of the ProgramUI class
-would be simply shifted into the CourseList UI class.
 #
 #### *Citations*
 - JSON Serialization Demo code referenced, link to source: https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo
